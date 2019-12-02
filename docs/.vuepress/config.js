@@ -20,7 +20,7 @@ module.exports = {
              // 单项 text：显示文字，link：指向链接
              // 这里的'/' 指的是 docs文件夹路径
              // [以 '/' 结尾的默认指向该路径下README.md文件]
-            { text: '计算机基础', link: '/computer/' },  // http://localhost:8080/Wiki1001Pro/FAQ/
+            { text: '计算机基础', link: '/computer/首页' },  // http://localhost:8080/Wiki1001Pro/FAQ/
             { text: 'Java', link: '/Store/' },
             { text: 'Python', link: '/Thought/' },
             { text: '技术博客', link: '' },
@@ -35,12 +35,14 @@ module.exports = {
         sidebar:{
             // 打开FAQ主页链接时生成下面这个菜单
            '/computer/':[
+                ['/computer/首页','首页'],
                //多级菜单形式
                {
                 // 菜单名
                 title: 'Linux基础',
                 // 子菜单
-                children: [
+                children: 
+                    [
                     // ['','']=>[路径,标题]
                     // 或者写成 '路径',标题自动识别为该地址的文件中的h1标题
                     // 不以 '/' 结尾的就是指向.md文件             
@@ -60,30 +62,22 @@ module.exports = {
                         ['/computer/HTTP简介/状态码','状态码'],
                         ['/computer/HTTP简介/GET与POST请求','GET与POST请求'],
                     ]
-                    },
-               {
-                   // 菜单名
-                   title: '消化堆',
-                   // 子菜单
-                   children: [
-                       // ['','']=>[路径,标题]
-                       // 或者写成 '路径',标题自动识别为该地址的文件中的h1标题
-                       // 不以 '/' 结尾的就是指向.md文件             
-                       ['/computer/DigestionHeap/Digested','消化过'], // '/FAQ/DigestionHeap/Digested.md'文件
-                       ['/computer/DigestionHeap/Digesting','消化中'],
-                       ['/computer/DigestionHeap/DigestWill','待消化']
-                   ]
-               },
-               {
-                   title: '输出层',
-                   children: [
-                       ['/computer/Console/A001','#A001_VuePress'],
-                       ['/computer/Console/A002','#A002_插件清单']
-                   ]
-               },
-               ['/computer/','百科首页'],
-               ['/computer/Pool/SkillStack','技术栈'],
-               ['/computer/Pool/Review','归去来']
+                },
+                {
+                    title: '图解HTTP--阅读笔记',
+                    children: [
+                        ['/computer/《图解HTTP》笔记/了解Web及网络基础','了解Web及网络基础'],
+                        ['/computer/《图解HTTP》笔记/简单的HTTP协议','简单的HTTP协议'],
+                        ['/computer/《图解HTTP》笔记/HTTP报文内的HTTP信息','HTTP报文内的HTTP信息'],
+                        ['/computer/《图解HTTP》笔记/返回结果的HTTP状态码','返回结果的HTTP状态码'],
+                        ['/computer/《图解HTTP》笔记/与HTTP协作的Web服务器','与HTTP协作的Web服务器'],
+                        ['/computer/《图解HTTP》笔记/HTTP首部','HTTP首部'],
+                        ['/computer/《图解HTTP》笔记/确保Web安全的HTTPS协议','确保Web安全的HTTPS协议'],
+                        ['/computer/《图解HTTP》笔记/确保访问用户身份的认证','确保访问用户身份的认证'],
+                        ['/computer/《图解HTTP》笔记/基于HTTP的功能追加协议','基于HTTP的功能追加协议'],
+                        ['/computer/《图解HTTP》笔记/Web攻击技术','Web攻击技术'],
+                    ]
+                }
            ],
             // 打开Thought主页链接时生成下面这个菜单
            '/Thought/':[

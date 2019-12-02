@@ -4,7 +4,7 @@ heroImage: /img/logo.png
 heroText: Simon的书柜
 tagline: 休对故人思故国，且将新火试新茶。诗酒趁年华
 actionText: 首页
-actionLink: /computer/
+actionLink: /computer/首页/
 features:
 - title: 计算机基础
   details: 万丈高楼平地起
