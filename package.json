@@ -7,7 +7,8 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vuepress dev docs",
+    "build": "vuepress build docs"
   },
   "repository": {
     "type": "git",
@@ -20,9 +21,11 @@
     "url": "https://github.com/CK-shadow/Simon-Bookcase/issues"
   },
   "homepage": "https://github.com/CK-shadow/Simon-Bookcase#readme",
-  "scripts": {
-    "dev": "vuepress dev docs",
-    "build": "vuepress build docs",
-    "deploy": "bash deploy.sh"
+  "devDependencies": {
+    "webpack": "^4.41.2",
+    "webpack-dev-server": "^3.9.0"
+  },
+  "dependencies": {
+    "webpack-cli": "^3.3.10"
   }
 }
