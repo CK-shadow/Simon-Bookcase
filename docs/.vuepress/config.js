@@ -64,6 +64,20 @@ module.exports = {
                     ]
                 },
                 {
+                    title: '图解TCPIP--阅读笔记',
+                    children: [
+                        ['/computer/《图解TCPIP》笔记/网络基础知识','网络基础知识'],
+                        ['/computer/《图解TCPIP》笔记/TCPIP基础知识','TCPIP基础知识'],
+                        ['/computer/《图解TCPIP》笔记/数据链路','数据链路'],
+                        ['/computer/《图解TCPIP》笔记/IP协议','IP协议'],
+                        ['/computer/《图解TCPIP》笔记/IP协议相关技术','IP协议相关技术'],
+                        ['/computer/《图解TCPIP》笔记/TCP和UDP','TCP和UDP'],
+                        ['/computer/《图解TCPIP》笔记/路由协议','路由协议'],
+                        ['/computer/《图解TCPIP》笔记/应用协议','应用协议'],
+                        ['/computer/《图解TCPIP》笔记/网络安全','网络安全'],
+                    ]
+                },
+                {
                     title: '图解HTTP--阅读笔记',
                     children: [
                         ['/computer/《图解HTTP》笔记/了解Web及网络基础','了解Web及网络基础'],
