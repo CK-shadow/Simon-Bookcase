@@ -1,4 +1,12 @@
- ### 三协议四角色
+---
+title: Web访问中的角色与协议
+tags: 
+ - Web
+categories: frontEnd
+---
+
+
+### 三协议四角色
 ![](../../.vuepress/public/img/0447558e.png)
     
 所谓协议，即是规范，是通信双方事先的约定

@@ -1,4 +1,12 @@
- ## HTTP报文
+---
+title: HTTP报文内的HTTP信息
+tags: 
+ - HTTP
+ - Message
+categories: frontEnd
+---
+
+## HTTP报文
     
 用于HTTP协议交互的信息称为HTTP报文，请求端（客户端）的HTTP报文叫做请求报文，响应端（服务器端）的HTTP
 报文叫做响应报文。HTTP报文本身是由多行（用CR+LF作换行符）数据构成的字符串文本。HTTP报文大致可分为报文

@@ -1,3 +1,12 @@
+---
+title: TCP/IP基础知识
+tags: 
+ - TCP/IP
+ - Basic
+categories: frontEnd
+---
+
+
 ## TCP/IP的标准化
 **TCP/IP的含义**  
 多数情况下，TCP/IP指的是利用IP进行通信时所必须用到的协议群的统称。具体来说，IP或ICMP、TCP或UDP、

@@ -1,3 +1,13 @@
+---
+title: GET与POST请求
+tags: 
+ - HTTP
+ - GET
+ - POST
+categories: frontEnd
+---
+
+
 >**HTTP协议规定，浏览器向服务器提交请求的提交方式有8种，但GET与POST请求是最常用的两种请求提交方式**
     
 ---

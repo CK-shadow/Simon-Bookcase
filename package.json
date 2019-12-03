@@ -26,6 +26,7 @@
     "webpack-dev-server": "^3.9.0"
   },
   "dependencies": {
+    "vuepress-theme-reco": "^1.1.4",
     "webpack-cli": "^3.3.10"
   }
 }

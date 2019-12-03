@@ -1,3 +1,11 @@
+---
+title: HTTP协议
+tags: 
+ - HTTP
+categories: frontEnd
+---
+
+
 >**HTTP，Hyper Text Transfer Protocol ，超文本传输协议，是一个基于请求与响应模式的，无状态的网络协议，是浏**
 >**览器与服务器之间最常用的通信协议，HTTP协议是浏览器与服务器间的数据传递格式的一种约定，浏览器和服务器只要遵循**
 >**这个约定，就可以进行数据通讯了**

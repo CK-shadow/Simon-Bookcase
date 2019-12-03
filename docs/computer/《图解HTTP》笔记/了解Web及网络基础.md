@@ -1,4 +1,12 @@
- ## 使用HTTP访问网络
+---
+title: 了解Web及网络基础
+tags: 
+ - Web
+ - Internet
+categories: frontEnd
+---
+
+## 使用HTTP访问网络
     
 当我们在浏览器地址栏输入URL后，Web浏览器根据地址栏中指定的URL从Web服务器端获取文件资源(resource)等信息,
 从而显示出Web页面，像这种通过发送请求获取服务器资源的Web浏览器，都可称为客户端(client)

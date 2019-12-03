@@ -12,6 +12,7 @@ module.exports = {
     markdown: {
         lineNumbers: true // 代码块显示行号
     },
+    theme: 'reco',
     themeConfig: {
         sidebarDepth: 4, // e'b将同时提取markdown中h2 和 h3 标题，显示在侧边栏上。
         lastUpdated: 'Last Updated' ,// 文档更新时间：每个文件git最后提交的时间,
@@ -21,7 +22,7 @@ module.exports = {
              // 这里的'/' 指的是 docs文件夹路径
              // [以 '/' 结尾的默认指向该路径下README.md文件]
             { text: '计算机基础', link: '/computer/首页' },  // http://localhost:8080/Wiki1001Pro/FAQ/
-            { text: 'Java', link: '/Store/' },
+            { text: 'Java', link: '/java/首页' },
             { text: 'Python', link: '/Thought/' },
             { text: '技术博客', link: '' },
             { text: '随笔', link: '' },
@@ -110,28 +111,18 @@ module.exports = {
                    ]
                },
            ],
-             // 打开Store主页链接时生成下面这个菜单
-           '/Store/': [
-               ['','仓库首页'],
-               {
-                   title: '应用',
-                   children: [
-                       ['/Store/Apps/DownDoors', '下载门户'],
-                       ['/Store/Apps/OwnTest', '博主测评']
-                   ]
-               },
-               {
-                   title: '电影',
-                   children: [
-                       ['/Store/Films/','收藏级电影']
-                   ]
-               },
-               {
-                   title: '动画',
-                   children: [
-                       ['/Store/Anime/','收藏级动画']
-                   ]
-               },
+           '/java/': [
+            ['/java/首页','首页'],
+            {
+             title: '码出高效--阅读笔记',
+             children: 
+                 [
+                 ['/java/《码出高效》笔记/编码规约','编码规约'],
+                 //['/java/《码出高效》笔记/基础指令','基础指令'],
+                 //['/java/《码出高效》笔记/进阶指令','进阶指令'],
+                 //['/java/《码出高效》笔记/高级指令','高级指令']
+             ]
+             },
            ]
        },
     }

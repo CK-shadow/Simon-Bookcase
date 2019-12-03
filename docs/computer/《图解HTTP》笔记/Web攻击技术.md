@@ -1,3 +1,10 @@
+---
+title: Web攻击技术
+tags: 
+ - Web Attack
+categories: frontEnd
+---
+
 ## 针对Web的攻击技术
 简单的 HTTP 协议本身并不存在安全性问题，因此协议本身几乎不会 成为攻击的对象。应用 HTTP 协议的服务
 器和客户端，以及运行在服 务器上的 Web 应用等资源才是攻击目标

@@ -1,3 +1,12 @@
+---
+title: TCP和UDP
+tags: 
+ - TCP
+ - UDP
+categories: frontEnd
+---
+
+
 ## 传输层的作用
 **两种传输层协议 TCP和UDP**
 * TCP：TCP是面向连接的、可靠的流协议。流就是指不间断的数据结构，当应用程序采用TCP发送消息时，虽然可以保证

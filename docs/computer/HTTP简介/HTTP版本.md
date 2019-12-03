@@ -1,3 +1,10 @@
+---
+title: HTTP版本
+tags: 
+ - HTTP1.0
+ - HTTP1.1
+categories: frontEnd
+---
 
 >**客户端如果要向服务器发送请求，首先需要在它们之间创建一个TCP(Transfer Control Protocol,传输控制协议)连接，**
 >**而当客户端与服务端的通信结束之后，TCP连接将被关闭，这个连接就是基于HTTP协议的**  

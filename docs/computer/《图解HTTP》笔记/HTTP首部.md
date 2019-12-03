@@ -1,4 +1,12 @@
- ## HTTP报文首部
+---
+title: HTTP首部
+tags: 
+ - HTTP
+ - Header
+categories: frontEnd
+---
+
+## HTTP报文首部
    ![](../../.vuepress/public/img/ff320c37.png)
    ![](../../.vuepress/public/img/0449d79f.png)
    ![](../../.vuepress/public/img/cf5a924c.png)
