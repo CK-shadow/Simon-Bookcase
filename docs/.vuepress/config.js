@@ -16,7 +16,7 @@ module.exports = {
     },
     theme: 'reco',
     themeConfig: {
-        sidebarDepth: 4, // e'b将同时提取markdown中h2 和 h3 标题，显示在侧边栏上。
+        sidebarDepth: 1, // e'b将同时提取markdown中h2 和 h3 标题，显示在侧边栏上。
         lastUpdated: 'Last Updated' ,// 文档更新时间：每个文件git最后提交的时间,
         // 顶部导航栏
         nav:[
@@ -64,19 +64,12 @@ module.exports = {
            ],
            '/database/':[
                ['/database/首页','首页'],
-               {
-                   title: 'MongoDB基础教程',
-                   children:
-                   [
-                    ['/database/MongoDB基础教程/NoSQL简介','NoSQL简介'], 
-                    ['/database/MongoDB基础教程/MongoDB简介','MongoDB简介'], 
-                    ['/database/MongoDB基础教程/基本操作指令','基本操作指令'], 
-                    ['/database/MongoDB基础教程/CRUD','CRUD'],
-                    ['/database/MongoDB基础教程/查询','查询'],
-                    ['/database/MongoDB基础教程/基本函数','基本函数'],
-                    ['/database/MongoDB基础教程/高级函数','高级函数'],
-                   ]
-               }
+               {title: 'MongoDB基础教程',children:[['/database/MongoDB基础教程/NoSQL简介','NoSQL简介'], ['/database/MongoDB基础教程/MongoDB简介','MongoDB简介'], ['/database/MongoDB基础教程/基本操作指令','基本操作指令'], ['/database/MongoDB基础教程/CRUD','CRUD'],['/database/MongoDB基础教程/查询','查询'],['/database/MongoDB基础教程/基本函数','基本函数'],['/database/MongoDB基础教程/高级函数','高级函数'],]},
+               {title: 'Redis基础教程',
+                children:[
+                    ['/database/Redis基础教程/数据操作','数据操作'],
+                    ['/database/Redis基础教程/高级操作','高级操作'],
+                ]}
             ]
        },
     }
