@@ -20,10 +20,7 @@ module.exports = {
         lastUpdated: 'Last Updated' ,// 文档更新时间：每个文件git最后提交的时间,
         // 顶部导航栏
         nav:[
-             // 单项 text：显示文字，link：指向链接
-             // 这里的'/' 指的是 docs文件夹路径
-             // [以 '/' 结尾的默认指向该路径下README.md文件]
-            { text: '计算机基础', link: '/computer/首页' },  // http://localhost:8080/Wiki1001Pro/FAQ/
+            { text: '计算机基础', link: '/computer/首页' }, 
             { text: 'Java', link: '/java/首页' },
             { text: 'Python', link: '/Python/首页' },
             { text: '数据库', link: '/database/首页' },
@@ -60,47 +57,23 @@ module.exports = {
                     //['/java/《码出高效》笔记/设计规约','设计规约'],
                     ]
                 },
+            {
+                title: 'Maven教程',
+                children:[
+                    ['/java/Maven教程/Maven简介','Maven简介'],
+                    ['/java/Maven教程/Maven-POM','Maven-POM'],
+                    ['/java/Maven教程/Maven构建声明周期','Maven构建声明周期'],
+                    ['/java/Maven教程/Maven仓库','Maven仓库'],
+                    ['/java/Maven教程/Maven插件','Maven插件'],
+                    ['/java/Maven教程/快照','快照'],
+                    ['/java/Maven教程/Maven依赖管理','Maven依赖管理'],
+                ]
+            },
             {title: '码出高效--阅读笔记',children: [['/java/《码出高效》笔记/编码规约','编码规约'],['/java/《码出高效》笔记/异常日志','异常日志'],['/java/《码出高效》笔记/单元测试','单元测试'],['/java/《码出高效》笔记/安全规约','安全规约'],['/java/《码出高效》笔记/MySQL数据库','MySQL数据库'],['/java/《码出高效》笔记/工程结构','工程结构'],['/java/《码出高效》笔记/设计规约','设计规约'],]},
            ],
            '/python/':[
             ['/python/首页','首页'],
-            {
-                title: '自学笔记',
-                children:[
-                    ['/python/自学笔记/了解Python','了解Python'],
-                    ['/python/自学笔记/基本运算符','基本运算符'],
-                    ['/python/自学笔记/字符串','字符串'],
-                    ['/python/自学笔记/字符串格式化与while循环','字符串格式化与while循环'],
-                    ['/python/自学笔记/for循环与list','for循环与list'],
-                    ['/python/自学笔记/list高级','list高级'],
-                    ['/python/自学笔记/元组和字典','元组和字典'],
-                    ['/python/自学笔记/Set和函数','Set和函数'],
-                    ['/python/自学笔记/传参和变量','传参和变量'],
-                    ['/python/自学笔记/装饰器和模块','装饰器和模块'],
-                    ['/python/自学笔记/模块和包','模块和包'],
-                    ['/python/自学笔记/异常','异常'],
-                    ['/python/自学笔记/迭代器-生成器和字节','迭代器、生成器和字节'],
-                    ['/python/自学笔记/File','File'],
-                    ['/python/自学笔记/面向对象','面向对象'],
-                    ['/python/自学笔记/类','类'],
-                    ['/python/自学笔记/类的特征','类的特征'],
-                    ['/python/自学笔记/与类相关','与类相关'],
-                    ['/python/自学笔记/了解网络基础','了解网络基础'],
-                    ['/python/自学笔记/UDP协议','UDP协议'],
-                    ['/python/自学笔记/IO','IO'],
-                    ['/python/自学笔记/IO多路复用','IO多路复用'],
-                    ['/python/自学笔记/进程','进程'],
-                    ['/python/自学笔记/线程','线程'],
-                    ['/python/自学笔记/网络通信模型和协程','网络通信模型和协程'],
-                    ['/python/自学笔记/初识Flask','初识Flask'],
-                    ['/python/自学笔记/模板','模板'],
-                    ['/python/自学笔记/Flask中的请求与响应','Flask中的请求与响应'],
-                    ['/python/自学笔记/模型','模型'],
-                    ['/python/自学笔记/基于Flask的CRUD','基于Flask的CRUD'],
-                    ['/python/自学笔记/关系映射','关系映射'],
-                    ['/python/自学笔记/Python爬虫','Python爬虫'],
-                ]
-            }
+            {title: '自学笔记',children:[['/python/自学笔记/了解Python','了解Python'],['/python/自学笔记/基本运算符','基本运算符'],['/python/自学笔记/字符串','字符串'],['/python/自学笔记/字符串格式化与while循环','字符串格式化与while循环'],['/python/自学笔记/for循环与list','for循环与list'],['/python/自学笔记/list高级','list高级'],['/python/自学笔记/元组和字典','元组和字典'],['/python/自学笔记/Set和函数','Set和函数'],['/python/自学笔记/传参和变量','传参和变量'],['/python/自学笔记/装饰器和模块','装饰器和模块'],['/python/自学笔记/模块和包','模块和包'],['/python/自学笔记/异常','异常'],['/python/自学笔记/迭代器-生成器和字节','迭代器、生成器和字节'],['/python/自学笔记/File','File'],['/python/自学笔记/面向对象','面向对象'],['/python/自学笔记/类','类'],['/python/自学笔记/类的特征','类的特征'],['/python/自学笔记/与类相关','与类相关'],['/python/自学笔记/了解网络基础','了解网络基础'],['/python/自学笔记/UDP协议','UDP协议'],['/python/自学笔记/IO','IO'],['/python/自学笔记/IO多路复用','IO多路复用'],['/python/自学笔记/进程','进程'],['/python/自学笔记/线程','线程'],['/python/自学笔记/网络通信模型和协程','网络通信模型和协程'],['/python/自学笔记/初识Flask','初识Flask'],['/python/自学笔记/模板','模板'],['/python/自学笔记/Flask中的请求与响应','Flask中的请求与响应'],['/python/自学笔记/模型','模型'],['/python/自学笔记/基于Flask的CRUD','基于Flask的CRUD'],['/python/自学笔记/关系映射','关系映射'],['/python/自学笔记/Python爬虫','Python爬虫'],]},
             ],
            '/database/':[
                ['/database/首页','首页'],
