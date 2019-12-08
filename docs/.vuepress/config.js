@@ -25,7 +25,7 @@ module.exports = {
              // [以 '/' 结尾的默认指向该路径下README.md文件]
             { text: '计算机基础', link: '/computer/首页' },  // http://localhost:8080/Wiki1001Pro/FAQ/
             { text: 'Java', link: '/java/首页' },
-            { text: 'Python', link: '/Thought/' },
+            { text: 'Python', link: '/Python/首页' },
             { text: '数据库', link: '/database/首页' },
             { text: '技术博客', link: '' },
             { text: '随笔', link: '' },
@@ -62,14 +62,50 @@ module.exports = {
                 },
             {title: '码出高效--阅读笔记',children: [['/java/《码出高效》笔记/编码规约','编码规约'],['/java/《码出高效》笔记/异常日志','异常日志'],['/java/《码出高效》笔记/单元测试','单元测试'],['/java/《码出高效》笔记/安全规约','安全规约'],['/java/《码出高效》笔记/MySQL数据库','MySQL数据库'],['/java/《码出高效》笔记/工程结构','工程结构'],['/java/《码出高效》笔记/设计规约','设计规约'],]},
            ],
+           '/python/':[
+            ['/python/首页','首页'],
+            {
+                title: '自学笔记',
+                children:[
+                    ['/python/自学笔记/了解Python','了解Python'],
+                    ['/python/自学笔记/基本运算符','基本运算符'],
+                    ['/python/自学笔记/字符串','字符串'],
+                    ['/python/自学笔记/字符串格式化与while循环','字符串格式化与while循环'],
+                    ['/python/自学笔记/for循环与list','for循环与list'],
+                    ['/python/自学笔记/list高级','list高级'],
+                    ['/python/自学笔记/元组和字典','元组和字典'],
+                    ['/python/自学笔记/Set和函数','Set和函数'],
+                    ['/python/自学笔记/传参和变量','传参和变量'],
+                    ['/python/自学笔记/装饰器和模块','装饰器和模块'],
+                    ['/python/自学笔记/模块和包','模块和包'],
+                    ['/python/自学笔记/异常','异常'],
+                    ['/python/自学笔记/迭代器-生成器和字节','迭代器、生成器和字节'],
+                    ['/python/自学笔记/File','File'],
+                    ['/python/自学笔记/面向对象','面向对象'],
+                    ['/python/自学笔记/类','类'],
+                    ['/python/自学笔记/类的特征','类的特征'],
+                    ['/python/自学笔记/与类相关','与类相关'],
+                    ['/python/自学笔记/了解网络基础','了解网络基础'],
+                    ['/python/自学笔记/UDP协议','UDP协议'],
+                    ['/python/自学笔记/IO','IO'],
+                    ['/python/自学笔记/IO多路复用','IO多路复用'],
+                    ['/python/自学笔记/进程','进程'],
+                    ['/python/自学笔记/线程','线程'],
+                    ['/python/自学笔记/网络通信模型和协程','网络通信模型和协程'],
+                    ['/python/自学笔记/初识Flask','初识Flask'],
+                    ['/python/自学笔记/模板','模板'],
+                    ['/python/自学笔记/Flask中的请求与响应','Flask中的请求与响应'],
+                    ['/python/自学笔记/模型','模型'],
+                    ['/python/自学笔记/基于Flask的CRUD','基于Flask的CRUD'],
+                    ['/python/自学笔记/关系映射','关系映射'],
+                    ['/python/自学笔记/Python爬虫','Python爬虫'],
+                ]
+            }
+            ],
            '/database/':[
                ['/database/首页','首页'],
                {title: 'MongoDB基础教程',children:[['/database/MongoDB基础教程/NoSQL简介','NoSQL简介'], ['/database/MongoDB基础教程/MongoDB简介','MongoDB简介'], ['/database/MongoDB基础教程/基本操作指令','基本操作指令'], ['/database/MongoDB基础教程/CRUD','CRUD'],['/database/MongoDB基础教程/查询','查询'],['/database/MongoDB基础教程/基本函数','基本函数'],['/database/MongoDB基础教程/高级函数','高级函数'],]},
-               {title: 'Redis基础教程',
-                children:[
-                    ['/database/Redis基础教程/数据操作','数据操作'],
-                    ['/database/Redis基础教程/高级操作','高级操作'],
-                ]}
+               {title: 'Redis基础教程',children:[['/database/Redis基础教程/数据操作','数据操作'],['/database/Redis基础教程/高级操作','高级操作'],]},
             ]
        },
     }
