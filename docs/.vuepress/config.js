@@ -1,6 +1,5 @@
 module.exports = {
-    plugins: ['@vuepress/back-to-top'],
-    '@vuepress/back-to-top': true,
+    base : '',
     title: 'Simon的书柜', 
     description: 'Simon的书柜', // meta 中的描述文字，意义不大，SEO用
     // 注入到当前页面的 HTML <head> 中的标签
@@ -10,7 +9,7 @@ module.exports = {
         // 即 docs/.vuepress/public/img/geass-bg.ico
         ['link', { rel: 'icon', href: '/img/geass-bg.ico' }], 
     ],
-    base: '/Simon-Bookcase/', // 这是部署到github相关的配置
+    base: '/', // 这是部署到github相关的配置
     markdown: {
         lineNumbers: true // 代码块显示行号
     },
@@ -23,6 +22,7 @@ module.exports = {
             { text: '计算机基础', link: '/computer/首页' }, 
             { text: 'Java', link: '/java/首页' },
             { text: 'Python', link: '/Python/首页' },
+            { text: '中间件', link: '/middleware/首页'},
             { text: '数据库', link: '/database/首页' },
             { text: '技术博客', link: '' },
             { text: '随笔', link: '' },
@@ -45,7 +45,7 @@ module.exports = {
            '/java/': [
             ['/java/首页','首页'],
             {
-                title: 'Java并发编程实践--阅读笔记',
+                title: '《Java并发编程实践》--笔记',
                 children: 
                     [
                     ['/java/《Java并发编程实践》笔记/线程安全性','线程安全性'],
@@ -56,29 +56,37 @@ module.exports = {
                     //['/java/《码出高效》笔记/工程结构','工程结构'],
                     //['/java/《码出高效》笔记/设计规约','设计规约'],
                     ]
-                },
-            {
-                title: 'Maven教程',
-                children:[
-                    ['/java/Maven教程/Maven简介','Maven简介'],
-                    ['/java/Maven教程/Maven-POM','Maven-POM'],
-                    ['/java/Maven教程/Maven构建声明周期','Maven构建声明周期'],
-                    ['/java/Maven教程/Maven仓库','Maven仓库'],
-                    ['/java/Maven教程/Maven插件','Maven插件'],
-                    ['/java/Maven教程/快照','快照'],
-                    ['/java/Maven教程/Maven依赖管理','Maven依赖管理'],
+            },
+            {title: 'Shiro教程',children:[['/java/Shiro教程/Shiro简介','Shiro简介'],['/java/Shiro教程/Shiro身份验证','Shiro身份验证'],['/java/Shiro教程/Shiro授权','Shiro授权'],['/java/Shiro教程/Shiro-Web集成','Shiro-Web集成'],['/java/Shiro教程/Shiro-会话管理','Shiro-会话管理'],['/java/Shiro教程/Shiro-缓存机制','Shiro-缓存机制'],['/java/Shiro教程/Shiro-Spring集成','Shiro-Spring集成'],['/java/Shiro教程/Shiro-RememberMe','Shiro-RememberMe'],['/java/Shiro教程/Shiro-并发登录控制','Shiro-并发登录控制'],]},
+            {title: 'Maven教程',children:[['/java/Maven教程/Maven简介','Maven简介'],['/java/Maven教程/Maven-POM','Maven-POM'],['/java/Maven教程/Maven构建声明周期','Maven构建声明周期'],['/java/Maven教程/Maven仓库','Maven仓库'],['/java/Maven教程/Maven插件','Maven插件'],['/java/Maven教程/快照','快照'],['/java/Maven教程/Maven依赖管理','Maven依赖管理'],],},
+            {title: '一步一步上手SpringMVC--笔记',children: [['/java/《一步一步上手SpringMVC》笔记/SpringMVC概述','SpringMVC概述'],['/java/《一步一步上手SpringMVC》笔记/入门示例','入门示例'],['/java/《一步一步上手SpringMVC》笔记/映射路径','映射路径'],['/java/《一步一步上手SpringMVC》笔记/数据绑定','数据绑定'],['/java/《一步一步上手SpringMVC》笔记/视图解释器','视图解释器'],['/java/《一步一步上手SpringMVC》笔记/JSON的支持','JSON的支持'],['/java/《一步一步上手SpringMVC》笔记/上传和下载','上传和下载'],]},
+            {title: 'SpringData教程',children: [['/java/SpringData教程/JPA相关内容简介','JPA相关内容简介'],['/java/SpringData教程/基于Hibernate的CRUD','基于Hibernate的CRUD'],['/java/SpringData教程/Hibernate高级查询','Hibernate高级查询'],['/java/SpringData教程/基于Hibernate-JPA的CRUD','基于Hibernate-JPA的CRUD'],['/java/SpringData教程/Hibernate-JPA高级查询','Hibernate-JPA高级查询'],['/java/SpringData教程/SpringDataJpa基础','SpringDataJpa基础'],['/java/SpringData教程/Repository接口','Repository接口'],]},
+            {title: '一步一步上手SpringBoot--笔记',children:[['/java/《一步一步上手SpringBoot》笔记/SpringBoot概述','SpringBoot概述'],['/java/《一步一步上手SpringBoot》笔记/常用API说明','常用API说明'],['/java/《一步一步上手SpringBoot》笔记/SpringBoot配置流程','SpringBoot配置流程'],['/java/《一步一步上手SpringBoot》笔记/SpringBoot视图','SpringBoot视图'],]},
+            {title: '《SpringBoot开发实战》--笔记',
+                children: [
+                    ['/java/《SpringBoot+Vue全栈开发实战》笔记/SpringBoot简介','SpringBoot简介'],
+                    ['/java/《SpringBoot+Vue全栈开发实战》笔记/SpringBoot基础配置','SpringBoot基础配置'],
+                    ['/java/《SpringBoot+Vue全栈开发实战》笔记/SpringBoot整合Web开发','SpringBoot整合Web开发'],
+                    ['/java/《SpringBoot+Vue全栈开发实战》笔记/SpringBoot整合持久层技术','SpringBoot整合持久层技术'],
+                    ['/java/《SpringBoot+Vue全栈开发实战》笔记/RESTful和单元测试','RESTful和单元测试'],
+                    ['/java/《SpringBoot+Vue全栈开发实战》笔记/SpringBoot缓存','SpringBoot缓存'],
                 ]
             },
+            {title: '《深入理解SringCloud》--笔记',children: [['/java/《深入理解SpringCloud与微服务构建》笔记/微服务简介','微服务简介'],['/java/《深入理解SpringCloud与微服务构建》笔记/SpringCloud简介','SpringCloud简介'],['/java/《深入理解SpringCloud与微服务构建》笔记/SpringCloud组件对应版本','SpringCloud组件对应版本'],['/java/《深入理解SpringCloud与微服务构建》笔记/服务注册与发现Eureka','服务注册与发现Eureka'],['/java/《深入理解SpringCloud与微服务构建》笔记/负载均衡Ribbon','负载均衡Ribbon'],['/java/《深入理解SpringCloud与微服务构建》笔记/负载均衡Feign','负载均衡Feign'],['/java/《深入理解SpringCloud与微服务构建》笔记/熔断器Hystrix','熔断器Hystrix'],['/java/《深入理解SpringCloud与微服务构建》笔记/路由网关SpringCloudZuul','路由网关SpringCloudZuul'],['/java/《深入理解SpringCloud与微服务构建》笔记/配置中心SpringCloudConfig','配置中心SpringCloudConfig'],['/java/《深入理解SpringCloud与微服务构建》笔记/链路追踪SpringCloudSleuth','链路追踪SpringCloudSleuth'],['/java/《深入理解SpringCloud与微服务构建》笔记/微服务监控SpringBootAdmin','微服务监控SpringBootAdmin'],['/java/《深入理解SpringCloud与微服务构建》笔记/SpringBootSecurity详解','SpringBootSecurity详解'],['/java/《深入理解SpringCloud与微服务构建》笔记/SpringCloudOAuth2详解','SpringCloudOAuth2详解'],['/java/《深入理解SpringCloud与微服务构建》笔记/OAuth2+JWT','OAuth2+JWT'],]},
             {title: '码出高效--阅读笔记',children: [['/java/《码出高效》笔记/编码规约','编码规约'],['/java/《码出高效》笔记/异常日志','异常日志'],['/java/《码出高效》笔记/单元测试','单元测试'],['/java/《码出高效》笔记/安全规约','安全规约'],['/java/《码出高效》笔记/MySQL数据库','MySQL数据库'],['/java/《码出高效》笔记/工程结构','工程结构'],['/java/《码出高效》笔记/设计规约','设计规约'],]},
            ],
            '/python/':[
             ['/python/首页','首页'],
             {title: '自学笔记',children:[['/python/自学笔记/了解Python','了解Python'],['/python/自学笔记/基本运算符','基本运算符'],['/python/自学笔记/字符串','字符串'],['/python/自学笔记/字符串格式化与while循环','字符串格式化与while循环'],['/python/自学笔记/for循环与list','for循环与list'],['/python/自学笔记/list高级','list高级'],['/python/自学笔记/元组和字典','元组和字典'],['/python/自学笔记/Set和函数','Set和函数'],['/python/自学笔记/传参和变量','传参和变量'],['/python/自学笔记/装饰器和模块','装饰器和模块'],['/python/自学笔记/模块和包','模块和包'],['/python/自学笔记/异常','异常'],['/python/自学笔记/迭代器-生成器和字节','迭代器、生成器和字节'],['/python/自学笔记/File','File'],['/python/自学笔记/面向对象','面向对象'],['/python/自学笔记/类','类'],['/python/自学笔记/类的特征','类的特征'],['/python/自学笔记/与类相关','与类相关'],['/python/自学笔记/了解网络基础','了解网络基础'],['/python/自学笔记/UDP协议','UDP协议'],['/python/自学笔记/IO','IO'],['/python/自学笔记/IO多路复用','IO多路复用'],['/python/自学笔记/进程','进程'],['/python/自学笔记/线程','线程'],['/python/自学笔记/网络通信模型和协程','网络通信模型和协程'],['/python/自学笔记/初识Flask','初识Flask'],['/python/自学笔记/模板','模板'],['/python/自学笔记/Flask中的请求与响应','Flask中的请求与响应'],['/python/自学笔记/模型','模型'],['/python/自学笔记/基于Flask的CRUD','基于Flask的CRUD'],['/python/自学笔记/关系映射','关系映射'],['/python/自学笔记/Python爬虫','Python爬虫'],]},
             ],
+           '/middleware/':[
+            ['/middleware/首页', '首页'],
+            {title: 'Nginx教程',children: [['/middleware/Nginx教程/Nginx简介','Nginx简介'],['/middleware/Nginx教程/Nginx的安装','Nginx的安装'],['/middleware/Nginx教程/Nginx常用命令','Nginx常用命令'],['/middleware/Nginx教程/Nginx配置文件','Nginx配置文件'],['/middleware/Nginx教程/Nginx反向代理配置','Nginx反向代理配置'],['/middleware/Nginx教程/Nginx负载均衡配置','Nginx负载均衡配置'],['/middleware/Nginx教程/Nginx动静分离配置','Nginx动静分离配置'],['/middleware/Nginx教程/Nginx高可用配置','Nginx高可用配置'],['/middleware/Nginx教程/Nginx原理','Nginx原理'],]},
+           ],
            '/database/':[
-               ['/database/首页','首页'],
-               {title: 'MongoDB基础教程',children:[['/database/MongoDB基础教程/NoSQL简介','NoSQL简介'], ['/database/MongoDB基础教程/MongoDB简介','MongoDB简介'], ['/database/MongoDB基础教程/基本操作指令','基本操作指令'], ['/database/MongoDB基础教程/CRUD','CRUD'],['/database/MongoDB基础教程/查询','查询'],['/database/MongoDB基础教程/基本函数','基本函数'],['/database/MongoDB基础教程/高级函数','高级函数'],]},
-               {title: 'Redis基础教程',children:[['/database/Redis基础教程/数据操作','数据操作'],['/database/Redis基础教程/高级操作','高级操作'],]},
+            ['/database/首页','首页'],
+            {title: 'MongoDB基础教程',children:[['/database/MongoDB基础教程/NoSQL简介','NoSQL简介'], ['/database/MongoDB基础教程/MongoDB简介','MongoDB简介'], ['/database/MongoDB基础教程/基本操作指令','基本操作指令'], ['/database/MongoDB基础教程/CRUD','CRUD'],['/database/MongoDB基础教程/查询','查询'],['/database/MongoDB基础教程/基本函数','基本函数'],['/database/MongoDB基础教程/高级函数','高级函数'],]},
+            {title: 'Redis基础教程',children:[['/database/Redis基础教程/数据操作','数据操作'],['/database/Redis基础教程/高级操作','高级操作'],]},
             ]
        },
     }

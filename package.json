@@ -23,6 +23,7 @@
   "homepage": "https://github.com/CK-shadow/Simon-Bookcase#readme",
   "devDependencies": {
     "@vuepress/plugin-back-to-top": "^1.0.0-rc.1",
+    "vuepress": "^1.2.0",
     "webpack": "^4.41.2",
     "webpack-dev-server": "^3.9.0"
   },
