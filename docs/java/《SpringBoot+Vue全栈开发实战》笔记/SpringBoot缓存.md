@@ -204,3 +204,6 @@ public class RedisCacheConfig {
 
 ### 小结
 Ehcache部署简单，使用门槛较低，操作简便，但是功能较少，可扩展性较弱；Redis则需要单独部署服务器，单机版的Redis缓存基本上做到了开箱即用，集群版的Redis缓存虽然配置繁琐，但是有良好的扩展性与安全性，开发者在开发中可根据实际情况选择不同的缓存策略实现
+
+### Spring Boot缓存代码示例
+[SpringBoot缓存代码示例](https://gitee.com/CK_Simon/boot-demo/tree/master/chapter-4)

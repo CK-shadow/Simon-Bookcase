@@ -70,6 +70,7 @@ module.exports = {
                     ['/java/《SpringBoot+Vue全栈开发实战》笔记/SpringBoot整合持久层技术','SpringBoot整合持久层技术'],
                     ['/java/《SpringBoot+Vue全栈开发实战》笔记/RESTful和单元测试','RESTful和单元测试'],
                     ['/java/《SpringBoot+Vue全栈开发实战》笔记/SpringBoot缓存','SpringBoot缓存'],
+                    ['/java/《SpringBoot+Vue全栈开发实战》笔记/SpringBoot整合WebSocket','SpringBoot整合WebSocket'],
                 ]
             },
             {title: '《深入理解SringCloud》--笔记',children: [['/java/《深入理解SpringCloud与微服务构建》笔记/微服务简介','微服务简介'],['/java/《深入理解SpringCloud与微服务构建》笔记/SpringCloud简介','SpringCloud简介'],['/java/《深入理解SpringCloud与微服务构建》笔记/SpringCloud组件对应版本','SpringCloud组件对应版本'],['/java/《深入理解SpringCloud与微服务构建》笔记/服务注册与发现Eureka','服务注册与发现Eureka'],['/java/《深入理解SpringCloud与微服务构建》笔记/负载均衡Ribbon','负载均衡Ribbon'],['/java/《深入理解SpringCloud与微服务构建》笔记/负载均衡Feign','负载均衡Feign'],['/java/《深入理解SpringCloud与微服务构建》笔记/熔断器Hystrix','熔断器Hystrix'],['/java/《深入理解SpringCloud与微服务构建》笔记/路由网关SpringCloudZuul','路由网关SpringCloudZuul'],['/java/《深入理解SpringCloud与微服务构建》笔记/配置中心SpringCloudConfig','配置中心SpringCloudConfig'],['/java/《深入理解SpringCloud与微服务构建》笔记/链路追踪SpringCloudSleuth','链路追踪SpringCloudSleuth'],['/java/《深入理解SpringCloud与微服务构建》笔记/微服务监控SpringBootAdmin','微服务监控SpringBootAdmin'],['/java/《深入理解SpringCloud与微服务构建》笔记/SpringBootSecurity详解','SpringBootSecurity详解'],['/java/《深入理解SpringCloud与微服务构建》笔记/SpringCloudOAuth2详解','SpringCloudOAuth2详解'],['/java/《深入理解SpringCloud与微服务构建》笔记/OAuth2+JWT','OAuth2+JWT'],]},
