@@ -317,7 +317,10 @@ $(function () {
 })
 ```
 
-6.测试  
+6. 测试  
 使用两个不同的浏览器登录，并向对方发送消息
 ![](../../.vuepress/public/img/201912161140.png)
 ![](../../.vuepress/public/img/201912161141.png)
+
+### Spring Boot整合WebSocket代码示例
+[SpringBoot整合WebSocket代码示例](https://gitee.com/CK_Simon/boot-demo/tree/master/chapter-5)
