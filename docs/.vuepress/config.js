@@ -84,7 +84,8 @@ module.exports = {
             {
                 title: '《VueJs实战》--笔记',
                 children: [
-                    ['/frontend/《VueJs实战》笔记/初始VueJs','初始VueJs'],
+                    ['/frontend/《VueJs实战》笔记/初识VueJs','初识VueJs'],
+                    ['/frontend/《VueJs实战》笔记/数据绑定和第一个Vue应用','数据绑定和第一个Vue应用'],
                 ]
             },
            ]

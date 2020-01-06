@@ -1,5 +1,5 @@
 ---
-title: 初始Vue.js
+title: 初识Vue.js
 tags: 
  - Vue.js
 categories: frontEnd
