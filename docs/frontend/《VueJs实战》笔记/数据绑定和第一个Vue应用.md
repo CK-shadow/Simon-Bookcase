@@ -164,3 +164,96 @@ Vue.js只支持单个表达式，不支持语句和流控制，另外，在表�
 <!-- 不能使用流控制，要使用三元运算 -->
 {{if(OK) return message}}
 ```
+
+### 过滤器
+Vue.js支持在插值的尾部添加一个管道符"(|)"对数据进行过滤，经常用于格式化文本，比如字母全部大写，货币千位使用逗号分隔等。过滤的规则是自定义的，通过给Vue实例添加选项filters来设置，比如对上面示例的时间进行格式化：
+```HTML
+<div id="app">
+    {{ date | formatDate }}
+</div>
+<script>
+    // 在月份、日期、小时等小于10时前面补0
+    var padDate = function (value) {
+        return value < 10 ? '0' + value : value;
+    };
+
+    var app = new Vue({
+        el : '#app',
+        data : {
+            date : new Date()
+        },
+        filters : {
+            formatDate : function (value) {
+                const date = new Date(value);
+                const year = date.getFullYear();
+                const month = padDate(date.getMonth() + 1);
+                const day = padDate(date.getDate());
+                const hours = padDate(date.getHours());
+                const minutes = padDate(date.getMinutes());
+                const seconds = padDate(date.getSeconds());
+                return year + '-' + month + '-' + day + ' ' 
+                        + hours + ':' + minutes + ':' + seconds;
+            }
+        },
+        mounted : function () {
+            const _this = this;
+            this.timer = setInterval(function () {
+                _this.date = new Date();
+            }, 1000);
+        },
+        beforeDestroy : function () {
+            if (this.timer) {
+                clearInterval(this.timer);
+            }
+        }
+    })
+</script>
+```
+
+&emsp;  
+过滤器也可以串联，而且可以接收参数，例如：
+```
+<!-- 串联 -->
+{{ message | filterA | filterB }}
+<!-- 接收参数 -->
+<!-- arg1和arg2分别是传给过滤器的第2个和第3个参数，因为第一个是数据本身 -->
+{{ message | filterA('arg1', 'arg2') }}
+```
+::: tip
+过滤器应当用于处理简单的文本转换，如果要实现更为复杂的数据变换，应该使用计算属性
+:::
+
+## 指令与事件
+指令（Directives）是Vue.js模板中最常见的一项功能，它带有前缀v-，比如v-if、v-html、v-pre等。指令的主要职责就是当其表达式的值发生改变时，相应地将某些行为应用到DOM上
+
+&emsp;  
+以v-if为例：
+```HTML
+<div>
+    <p v-if="show">显示这段文本</p>
+</div>
+<script>
+    var app = new Vue({
+        el : '#app',
+        date : {
+            show : true
+        }
+    })
+</script>
+```
+当数据show的值为true时，p元素会被插入，为false时则会被移除。Vue.js内置了很多指令，后续会进行详细介绍
+
+## 语法糖
+语法糖是指在不影响功能的情况下，添加某种方法实现同样的效果，从而方便程序开发
+
+&emsp;  
+Vue.js的v-bind和v-on指令都提供了语法糖，也可以说是缩写
+```
+<a v-bind:href="url">链接</a>
+<!-- 缩写为 -->
+<a :href="url">链接</a>
+
+<button v-on:click="handleClose">点击隐藏</button>
+<!-- 缩写为 -->
+<button @click="handleClose">点击隐藏</button>
+```
