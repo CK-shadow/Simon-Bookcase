@@ -88,6 +88,7 @@ module.exports = {
                     ['/frontend/《VueJs实战》笔记/数据绑定和第一个Vue应用','数据绑定和第一个Vue应用'],
                     ['/frontend/《VueJs实战》笔记/计算属性','计算属性'],
                     ['/frontend/《VueJs实战》笔记/v-bind及class与style绑定','v-bind及class与style绑定'],
+                    ['/frontend/《VueJs实战》笔记/内置指令','内置指令'],
                 ]
             },
            ]
