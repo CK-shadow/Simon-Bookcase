@@ -91,6 +91,7 @@ module.exports = {
                     ['/frontend/《VueJs实战》笔记/内置指令','内置指令'],
                     ['/frontend/《VueJs实战》笔记/表单与v-model','表单与v-model'],
                     ['/frontend/《VueJs实战》笔记/组件详解','组件详解'],
+                    ['/frontend/《VueJs实战》笔记/自定义指令','自定义指令'],
                 ]
             },
            ]
