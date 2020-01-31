@@ -106,3 +106,95 @@ VNode节点主要分为以下几类：
 
 &emsp;  
 使用Virtual DOM就可以完全发挥JavaScript的编程能力，在多数场景下，我们使用template就足够了，但是在一些特定场景下，使用Virtual DOM会更简单
+
+## 什么是Render函数
+### createElement用法
+**基本参数**  
+createElement构成了Vue Virtual DOM的模板，它有三个参数：
+```js
+createElement(
+    // { String | Object | Function }
+    // 一个HTML标签，组件选项，或一个函数
+    // 必须Return上述其中一个
+    'div',
+    // { Object }
+    // 一个对应属性的数据对象，可选
+    // 可以在template中使用
+    {
+        // 稍后详细介绍
+    },
+    // { String | Array }
+    // 子节点（VNodes，可选）
+    [
+        createElement('h1', 'hello world'),
+        createElement('MyCompnent', {
+            props: {
+                someProp: 'foo'
+            }
+        });
+        'bar'
+    ]
+)
+```
+第一个参数必选，可以是一个HTML标签，也可以是一个组件或函数；第二个是可选参数，数据对象，在template中使用；第三个是子节点，也是可选参数，用法一致
+
+&emsp;  
+对于第二个参数“数据对象”，具体的选项如下：
+```js
+{
+    // 和v-bind:class一样的api
+    'class': {
+        foo: true,
+        bar: false
+    },
+    // 和v-bind:style一样的api
+    style: {
+        color: 'red'
+    },
+    // 正常的HTML特性
+    attrs: {
+        id: 'foo'
+    },
+    // 组件props
+    props: {
+        myProp: 'bar'
+    },
+    // DOM属性
+    domProps: {
+        innerHTML: 'baz'
+    },
+    // 自定义事件监听器'on'
+    // 不支持如v-on:keyup.enter的修饰器
+    // 需要手动匹配keyCode
+    on: {
+        click: this.clickHandler
+    },
+    // 仅对于组件，用于监听原生事件
+    // 而不是组件使用vm.$emit触发的自定义事件
+    nativeOn: {
+        click: this.nativeClickHandler
+    },
+    // 自定义指令
+    directives: [
+        {
+            name: 'my-custom-directive',
+            value: '2',
+            expression: '1 + 1',
+            arg: 'foo',
+            modifiers: {
+                bar: true
+            }
+        }
+    ],
+    // 作用域slot
+    // { name: props => VNode | Array<VNode> }
+    scopedSlots: {
+        default: props => h('span', props.text)
+    },
+    // 如果子组件有定义slot的名称
+    slot: 'name-of-slot',
+    key: 'myKey',
+    ref: 'myRef'
+}
+```
+有时候，template的写法明显比Render写法要可读而且简洁，所以要在合适的场景使用Render函数
