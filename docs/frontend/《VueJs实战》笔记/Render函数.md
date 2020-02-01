@@ -198,3 +198,99 @@ createElement(
 }
 ```
 有时候，template的写法明显比Render写法要可读而且简洁，所以要在合适的场景使用Render函数
+
+&emsp;  
+**约束**  
+所有的组件树中，如果VNode是组件或含有组件的slot，那么VNode必须唯一。因此，如果我们想添加多个相同的组件，在createElement函数中添加多个VNode是无法实现的。对于重复渲染多个组件（或元素）的方法有很多，比如以下示例：
+```HTML
+<div id="app">
+    <ele></ele>
+</div>
+<script>
+    // 局部声明组件
+    let Child = {
+        render: function (createElement) {
+            return createElement('p', 'text');
+        }
+    };
+
+    Vue.component('ele', {
+        render: function (createElement) {
+            return createElement('div',
+                Array.apply(null, {
+                    length: 5
+                }).map(function () {
+                    return createElement(Child);
+                })
+            );
+        }
+    });
+
+    let app = new Vue({
+        el: '#app'
+    })
+</script>
+```
+
+&emsp;  
+上例通过一个循环和工厂函数就可以渲染5个重复的子组件Child。对于含有组件的slot，复用就要稍微复杂一点了，需要将slot的每个子节点都克隆一份
+```HTML
+<div id="app">
+    <ele>
+        <div>
+            <Child></Child>
+        </div>
+    </ele>
+</div>
+<script>
+    // 全局声明组件
+    Vue.component('Child', {
+        render: function (createElement) {
+            return createElement('p', 'text');
+        }
+    });
+
+    Vue.component('ele', {
+        render: function (createElement) {
+            // 克隆slot节点的方法
+            function cloneVNode(vnode) {
+                // 递归遍历所有子节点，并克隆
+                const clonedChildren = vnode.children &&
+                        vnode.children.map(function (vnode) {
+                            return cloneVNode(vnode);
+                        });
+                const cloned = createElement(
+                    vnode.tag,
+                    vnode.data,
+                    clonedChildren
+                );
+                cloned.text = vnode.text;
+                cloned.isComment = vnode.isComment;
+                cloned.componentOptions = vnode.componentOptions;
+                cloned.elm = vnode.elm;
+                cloned.context = vnode.context;
+                cloned.ns = vnode.ns;
+                cloned.isStatic = vnode.isStatic;
+                cloned.key = vnode.key;
+
+                return cloned;
+            }
+
+            const vNodes = this.$slots.default;
+            const clonedVNodes = vNodes.map(function (vnode) {
+                return cloneVNode(vnode);
+            });
+
+            return createElement('div',[
+                vNodes,
+                clonedVNodes
+            ]);
+        }
+    });
+
+    let app = new Vue({
+        el: '#app'
+    })
+</script>
+```
+在Render函数里创建了一个cloneVNode的工厂函数，提过递归将slot所有子节点都克隆了一份，并对VNode的关键属性也进行复制。深度克隆slot的的做法有点偏黑科技，不过一般在业务中几乎不会碰到这样的需求，主要还是运用在独立组件中
