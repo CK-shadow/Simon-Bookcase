@@ -294,3 +294,133 @@ createElement(
 </script>
 ```
 在Render函数里创建了一个cloneVNode的工厂函数，提过递归将slot所有子节点都克隆了一份，并对VNode的关键属性也进行复制。深度克隆slot的的做法有点偏黑科技，不过一般在业务中几乎不会碰到这样的需求，主要还是运用在独立组件中
+
+**是有JavaScript代替模板功能**  
+在Render函数中，不再需要Vue内置的指令，比如v-if、v-for，当然，也没办法使用它们。无论要实现什么功能，都可以用原生JavaScript。比如v-if和v-else可以这样写：
+```HTML
+<div id="app">
+    <ele :show="show"></ele>
+    <button @click="show = !show">切换 show</button>
+</div>
+<script>
+    Vue.component('ele', {
+        render: function (createElement) {
+            if (this.show) {
+                return createElement('p', 'show的值为true');
+            } else {
+                return createElement('p', 'show的值为false');
+            }
+        } ,
+        props: {
+            show: {
+                type: Boolean,
+                default: false
+            }
+        }
+    });
+
+    let app = new Vue({
+        el: '#app',
+        data: {
+            show: false
+        }
+    })
+</script>
+```
+
+&emsp;  
+对于v-for，可以用一个简单的for循环来实现
+```HTML
+<div id="app">
+    <ele :list="list"></ele>
+</div>
+<script>
+    Vue.component('ele', {
+        render: function (createElement) {
+            let nodes = [];
+            for (let i=0; i<this.list.length; i++) {
+                nodes.push(createElement('p', this.list[i]));
+            }
+            return createElement('div', nodes);
+        } ,
+        props: {
+            list: {
+                type: Array
+            }
+        }
+    });
+
+    let app = new Vue({
+        el: '#app',
+        data: {
+            list: [
+                'BookA',
+                'BookB',
+                'BookC'
+            ]
+        }
+    })
+</script>
+```
+在一开始解除Render写法时，可能会有点不适应，毕竟这种用createElement写法创建DOM节点的方法不够直观和可读，而且受Vue内置指令的影响，有时会绕不过弯。不过只要把它当作JavaScript一个普通的函数来使用，写习惯之后就没有那么难理解了
+
+&emsp;  
+Render函数里也没有与v-model对应的api，需要自己实现逻辑
+```HTML
+<div id="app">
+    <ele></ele>
+</div>
+<script>
+    Vue.component('ele', {
+        render: function (createElement) {
+            let _this = this;
+            return createElement('div', [
+                createElement('input', {
+                    domProps: {
+                        value: this.value
+                    },
+                    on: {
+                        input: function (event) {
+                            _this.value = event.target.value;
+                        }
+                    }
+                }),
+                createElement('p', 'value: ' + this.value)
+            ])
+        } ,
+        data: function () {
+            return {
+                value: ''
+            }
+        }
+    });
+
+    let app = new Vue({
+        el: '#app'
+    })
+</script>
+```
+
+## JSX
+使用Render函数最不友好的地方就是在模板比较简单时，写起来也很复杂，而且难以阅读出DOM结构，尤其当子节点嵌套较多时，嵌套的createElement就像盖楼一样一层层延续下去
+
+&emsp;  
+为了让Render函数更好的书写和阅读，Vue.js提供了babel-plugin-transform-vue-jsx来支持JSX语法。JSX是一种看起来像HTML，但实际是JavaScript的语法扩展，它用更接近DOM结构的形式来描述一个组件的UI和状态信息，最早在React.js中大量应用
+
+&emsp;  
+```HTML
+new Vue({
+    el: '#app',
+    render (h) {
+        return (
+            <Anchor level={1}>
+                <span>一级</span>标题
+            </Anchor>
+        )
+    }
+})
+```
+上面代码无法直接运行，需要在webpack里配置插件babel-plugin-transform-vue-jsx编译后才可以。这里的render使用了ES2015的语法缩写了函数，需要注意的是，参数h不能省略，否则使用时会触发错误
+
+&emsp;  
+JSX仍然是JavaScript而不是DOM，如果你的团队不是JSX强驱动的，建议还是以模板template的方式为主，特殊场景（比如锚点标题）使用Render的createElement辅助完成
