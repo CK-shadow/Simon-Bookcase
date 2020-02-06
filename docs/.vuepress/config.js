@@ -93,6 +93,7 @@ module.exports = {
                     ['/frontend/《VueJs实战》笔记/组件详解','组件详解'],
                     ['/frontend/《VueJs实战》笔记/自定义指令','自定义指令'],
                     ['/frontend/《VueJs实战》笔记/Render函数','Render函数'],
+                    ['/frontend/《VueJs实战》笔记/使用webpack','使用webpack'],
                 ]
             },
            ]
