@@ -417,10 +417,3 @@ components: {
 对象字面量缩写，当对象的key与value名称一致时，可以缩写成一个
 :::
 导入的组件都是局部注册的，而且可以自定义名称，其他用法和组件一致
-
-## 用于生产环境
-安装url-loader和file-loader来支持图片、字体等文件
-```
-npm install --save-dev url-loader
-npm install --save-dev file-loader
-```
