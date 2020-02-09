@@ -15,6 +15,7 @@ module.exports = {
     },
     theme: 'reco',
     themeConfig: {
+        //type: 'blog',
         sidebarDepth: 1, // e'b将同时提取markdown中h2 和 h3 标题，显示在侧边栏上。
         lastUpdated: 'Last Updated' ,// 文档更新时间：每个文件git最后提交的时间,
         // 顶部导航栏
@@ -26,7 +27,7 @@ module.exports = {
             { text: '数据库', link: '/database/首页' },
             { text: '前端', link: '/frontend/首页' },
             { text: '技术博客', link: '' },
-            { text: '随笔', link: '' },
+            { text: '随笔', link: '/essay/' },
             {
                 text: 'GitHub',
                 items: [
@@ -94,6 +95,7 @@ module.exports = {
                     ['/frontend/《VueJs实战》笔记/自定义指令','自定义指令'],
                     ['/frontend/《VueJs实战》笔记/Render函数','Render函数'],
                     ['/frontend/《VueJs实战》笔记/使用webpack','使用webpack'],
+                    ['/frontend/《VueJs实战》笔记/插件','插件'],
                 ]
             },
            ]
