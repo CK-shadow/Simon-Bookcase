@@ -74,7 +74,13 @@ module.exports = {
            '/middleware/':[
             ['/middleware/首页', '首页'],
             {title: 'Nginx教程',children: [['/middleware/Nginx教程/Nginx简介','Nginx简介'],['/middleware/Nginx教程/Nginx的安装','Nginx的安装'],['/middleware/Nginx教程/Nginx常用命令','Nginx常用命令'],['/middleware/Nginx教程/Nginx配置文件','Nginx配置文件'],['/middleware/Nginx教程/Nginx反向代理配置','Nginx反向代理配置'],['/middleware/Nginx教程/Nginx负载均衡配置','Nginx负载均衡配置'],['/middleware/Nginx教程/Nginx动静分离配置','Nginx动静分离配置'],['/middleware/Nginx教程/Nginx高可用配置','Nginx高可用配置'],['/middleware/Nginx教程/Nginx原理','Nginx原理'],]},
-           ],
+            {
+                title: 'RabbitMQ教程',
+                children: [
+                    ['/middleware/RabbitMQ教程/RabbitMQ简介','RabbitMQ简介'],
+                ]
+            },
+        ],
            '/database/':[
             ['/database/首页','首页'],
             {title: 'MongoDB基础教程',children:[['/database/MongoDB基础教程/NoSQL简介','NoSQL简介'], ['/database/MongoDB基础教程/MongoDB简介','MongoDB简介'], ['/database/MongoDB基础教程/基本操作指令','基本操作指令'], ['/database/MongoDB基础教程/CRUD','CRUD'],['/database/MongoDB基础教程/查询','查询'],['/database/MongoDB基础教程/基本函数','基本函数'],['/database/MongoDB基础教程/高级函数','高级函数'],]},
@@ -82,22 +88,7 @@ module.exports = {
             ],
            '/frontend/':[
             ['/frontend/首页','首页'],
-            {
-                title: '《VueJs实战》--笔记',
-                children: [
-                    ['/frontend/《VueJs实战》笔记/初识VueJs','初识VueJs'],
-                    ['/frontend/《VueJs实战》笔记/数据绑定和第一个Vue应用','数据绑定和第一个Vue应用'],
-                    ['/frontend/《VueJs实战》笔记/计算属性','计算属性'],
-                    ['/frontend/《VueJs实战》笔记/v-bind及class与style绑定','v-bind及class与style绑定'],
-                    ['/frontend/《VueJs实战》笔记/内置指令','内置指令'],
-                    ['/frontend/《VueJs实战》笔记/表单与v-model','表单与v-model'],
-                    ['/frontend/《VueJs实战》笔记/组件详解','组件详解'],
-                    ['/frontend/《VueJs实战》笔记/自定义指令','自定义指令'],
-                    ['/frontend/《VueJs实战》笔记/Render函数','Render函数'],
-                    ['/frontend/《VueJs实战》笔记/使用webpack','使用webpack'],
-                    ['/frontend/《VueJs实战》笔记/插件','插件'],
-                ]
-            },
+            {title: '《VueJs实战》--笔记',children: [['/frontend/《VueJs实战》笔记/初识VueJs','初识VueJs'],['/frontend/《VueJs实战》笔记/数据绑定和第一个Vue应用','数据绑定和第一个Vue应用'],['/frontend/《VueJs实战》笔记/计算属性','计算属性'],['/frontend/《VueJs实战》笔记/v-bind及class与style绑定','v-bind及class与style绑定'],['/frontend/《VueJs实战》笔记/内置指令','内置指令'],['/frontend/《VueJs实战》笔记/表单与v-model','表单与v-model'],['/frontend/《VueJs实战》笔记/组件详解','组件详解'],['/frontend/《VueJs实战》笔记/自定义指令','自定义指令'],['/frontend/《VueJs实战》笔记/Render函数','Render函数'],['/frontend/《VueJs实战》笔记/使用webpack','使用webpack'],['/frontend/《VueJs实战》笔记/插件','插件'],]},
            ]
        },
     }
