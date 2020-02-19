@@ -1,7 +1,7 @@
 ---
 title: Rabbit简介
 tags: 
- - Rabbit
+ - RabbitMQ
 categories: frontEnd
 ---
 

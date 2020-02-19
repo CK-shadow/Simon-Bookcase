@@ -78,6 +78,7 @@ module.exports = {
                 title: 'RabbitMQ教程',
                 children: [
                     ['/middleware/RabbitMQ教程/RabbitMQ简介','RabbitMQ简介'],
+                    ['/middleware/RabbitMQ教程/安装RabbitMQ','安装RabbitMQ'],
                 ]
             },
         ],
