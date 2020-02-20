@@ -38,6 +38,22 @@ categories: frontEnd
 3. 在浏览器中输入地址查看：http://127.0.0.1:15672/  
 ![](../../.vuepress/public/img/20180805224156458.png) 
 4. 使用默认账号登录：guest/ guest
+5. 添加admin用户
+![](../../.vuepress/public/img/20180805224521190.png)   
+超级管理员(administrator)：可登陆管理控制台，可查看所有的信息，并且可以对用户，策略(policy)进行操作  
+监控者(monitoring)：可登陆管理控制台，同时可以查看rabbitmq节点的相关信息(进程数，内存使用情况，磁盘使用情况等)  
+策略制定者(policymaker)：可登陆管理控制台, 同时可以对policy进行管理。但无法查看节点的相关信息(上图红框标识的部分)  
+普通管理者(management)：仅可登陆管理控制台，无法看到节点信息，也无法对策略进行管理  
+其他：无法登陆管理控制台，通常就是普通的生产者和消费者
+6. 创建Virtual Hosts
+![](../../.vuepress/public/img/20180805224535905.png)   
+选中Admin用户，设置权限：  
+![](../../.vuepress/public/img/20180805224551538.png)  
+看到权限已加：  
+![](../../.vuepress/public/img/20180805224618404.png)  
+7. 管理界面中的功能
+![](../../.vuepress/public/img/20180805224641957.png)  
+![](../../.vuepress/public/img/20180805224654453.png)  
  
 ## Linux下安装
 ### 1.安装Erlang
