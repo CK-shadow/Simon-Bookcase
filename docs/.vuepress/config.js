@@ -79,6 +79,7 @@ module.exports = {
                 children: [
                     ['/middleware/RabbitMQ教程/RabbitMQ简介','RabbitMQ简介'],
                     ['/middleware/RabbitMQ教程/安装RabbitMQ','安装RabbitMQ'],
+                    ['/middleware/RabbitMQ教程/五种队列之简单队列','五种队列之简单队列'],
                 ]
             },
         ],
