@@ -1,5 +1,5 @@
 ---
-title: 五种队列之简单队列
+title: 五种模型之Work模型
 tags: 
  - RabbitMQ
  - Work Queue
