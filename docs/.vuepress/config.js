@@ -83,6 +83,7 @@ module.exports = {
                     ['/middleware/RabbitMQ教程/五种队列之Work模式','五种模型之Work模式'],
                     ['/middleware/RabbitMQ教程/五种队列之Fanout','五种模型之订阅模型'],
                     ['/middleware/RabbitMQ教程/五种队列之Direct','五种模型之路由模型'],
+                    ['/middleware/RabbitMQ教程/五种队列之Topic','五种模型之主题模型'],
                 ]
             },
         ],
