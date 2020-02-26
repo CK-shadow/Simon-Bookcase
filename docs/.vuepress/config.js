@@ -85,6 +85,7 @@ module.exports = {
                     ['/middleware/RabbitMQ教程/五种队列之Direct','五种模型之路由模型'],
                     ['/middleware/RabbitMQ教程/五种队列之Topic','五种模型之主题模型'],
                     ['/middleware/RabbitMQ教程/Spring整合RabbitMQ','Spring整合RabbitMQ'],
+                    ['/middleware/RabbitMQ教程/SpringBoot整合RabbitMQ','SpringBoot整合RabbitMQ'],
                 ]
             },
         ],
