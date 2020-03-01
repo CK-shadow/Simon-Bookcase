@@ -73,21 +73,14 @@ module.exports = {
             ],
            '/middleware/':[
             ['/middleware/首页', '首页'],
-            {title: 'Nginx教程',children: [['/middleware/Nginx教程/Nginx简介','Nginx简介'],['/middleware/Nginx教程/Nginx的安装','Nginx的安装'],['/middleware/Nginx教程/Nginx常用命令','Nginx常用命令'],['/middleware/Nginx教程/Nginx配置文件','Nginx配置文件'],['/middleware/Nginx教程/Nginx反向代理配置','Nginx反向代理配置'],['/middleware/Nginx教程/Nginx负载均衡配置','Nginx负载均衡配置'],['/middleware/Nginx教程/Nginx动静分离配置','Nginx动静分离配置'],['/middleware/Nginx教程/Nginx高可用配置','Nginx高可用配置'],['/middleware/Nginx教程/Nginx原理','Nginx原理'],]},
             {
-                title: 'RabbitMQ教程',
+                title: '《Kafka权威指南》--笔记',
                 children: [
-                    ['/middleware/RabbitMQ教程/RabbitMQ简介','RabbitMQ简介'],
-                    ['/middleware/RabbitMQ教程/安装RabbitMQ','安装RabbitMQ'],
-                    ['/middleware/RabbitMQ教程/五种队列之简单队列','五种模型之简单队列'],
-                    ['/middleware/RabbitMQ教程/五种队列之Work模式','五种模型之Work模式'],
-                    ['/middleware/RabbitMQ教程/五种队列之Fanout','五种模型之订阅模型'],
-                    ['/middleware/RabbitMQ教程/五种队列之Direct','五种模型之路由模型'],
-                    ['/middleware/RabbitMQ教程/五种队列之Topic','五种模型之主题模型'],
-                    ['/middleware/RabbitMQ教程/Spring整合RabbitMQ','Spring整合RabbitMQ'],
-                    ['/middleware/RabbitMQ教程/SpringBoot整合RabbitMQ','SpringBoot整合RabbitMQ'],
+                    ['/middleware/《Kafka权威指南》笔记/初识Kafka','初识Kafka'],
                 ]
             },
+            {title: 'Nginx教程',children: [['/middleware/Nginx教程/Nginx简介','Nginx简介'],['/middleware/Nginx教程/Nginx的安装','Nginx的安装'],['/middleware/Nginx教程/Nginx常用命令','Nginx常用命令'],['/middleware/Nginx教程/Nginx配置文件','Nginx配置文件'],['/middleware/Nginx教程/Nginx反向代理配置','Nginx反向代理配置'],['/middleware/Nginx教程/Nginx负载均衡配置','Nginx负载均衡配置'],['/middleware/Nginx教程/Nginx动静分离配置','Nginx动静分离配置'],['/middleware/Nginx教程/Nginx高可用配置','Nginx高可用配置'],['/middleware/Nginx教程/Nginx原理','Nginx原理'],]},
+            {title: 'RabbitMQ教程',children: [['/middleware/RabbitMQ教程/RabbitMQ简介','RabbitMQ简介'],['/middleware/RabbitMQ教程/安装RabbitMQ','安装RabbitMQ'],['/middleware/RabbitMQ教程/五种队列之简单队列','五种模型之简单队列'],['/middleware/RabbitMQ教程/五种队列之Work模式','五种模型之Work模式'],['/middleware/RabbitMQ教程/五种队列之Fanout','五种模型之订阅模型'],['/middleware/RabbitMQ教程/五种队列之Direct','五种模型之路由模型'],['/middleware/RabbitMQ教程/五种队列之Topic','五种模型之主题模型'],['/middleware/RabbitMQ教程/Spring整合RabbitMQ','Spring整合RabbitMQ'],['/middleware/RabbitMQ教程/SpringBoot整合RabbitMQ','SpringBoot整合RabbitMQ'],]},
         ],
            '/database/':[
             ['/database/首页','首页'],
