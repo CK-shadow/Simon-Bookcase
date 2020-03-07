@@ -53,4 +53,61 @@ producer = new KafkaProducer<String, String>(kafkaProps);
 &emsp;  
 本章的所有例子都使用单线程，但其实生产者是可以使用多线程来发送消息的。刚开始的时候可以使用单个消费者和单个线程。如果需要更高的吞吐量，可以在生产者数量不变的前提下增加线程数量。如果这样做还不够，可以增加生产者数量
 
+## 发送消息到Kafka
+最简单的消息发送方式如下所示：
+```java
+// 创建一个ProducerRecord对象。这里使用其中一个构造函数，它需要目标主题的名字和要发送的键和
+// 值对象，它们都是字符串。键和值对象的类型必须与序列化器和生产者对象相匹配
+ProducerRecord<String, String> record = new ProducerRecord<>("CustomerCountry",
+   "Precision Products", "France");
+try {
+  // 使用生产者的send()方越发送ProducerRecord对象。消息先是被放进缓冲区，然后使用单独的线
+  // 程发送到服务器端。send()方法会返回一个包含 ProducerRecord的Future对象，不过因为我们会
+  // 忽略返回值
+  producer.send(record);
+} catch (Exception e) {
+  // 可以忽略发送消息时可能发生的错误或在服务器端可能发生的错误，但在发送消息之前，生产者
+  // 还是有可能发生其他的异常
+  e.printStackTrace();
+}
+```
+
+### 同步发送消息
+最简单的同步消息发送方式如下所示：
+```java
+ProducerRecord<String, String> record = new ProducerRecord<>("CustomerCountry"
+  , "Precision Products", "France");
+try {
+  // producer.send()方住先返回一个Future对象，然后调用Future 象的get()方法等待Kafka响应。
+  // 如果服务器返回错误，get()方法会抛出异常。如果没有发生错误，我们会得到一个
+  // RecordMetadata对象，可以用它获取消息的偏移量
+  producer.send(record).get();
+} catch (Exception e) {
+  // 如果在发送数据之前或者在发送过程中发生了任何错误，比如broker返回了一个不允许重发消息
+  // 的异常或者已经超过了重发的次数，那么就会抛出异常
+  e.printStackTrace();
+}
+```
+KafkaProducer一般会发生两类错误。其中一类是可重试错误，这类错误可以通过重发消息来解决。比如对于连接错误，可以通过再次建立连接来解决，“无主（no leader）” 错误则可以通过重新为分区选举首领来解决。KafkaProducer可以被配置成自动重试，如果在多次重试后仍无能解决问题，应用程序会收到一个重试异常。另一类错误无出通过重试解决，比如 “消息太大”异常。对于这类错误，KafkaProducer不会进行任何重试，直接抛出异常
+
+### 异步发送消息
+为了在异步发送消息的同时能够对异常情况进行处理，生产者提供了回调支持。下面是使用回调的一个例子
+```java
+// 为了使用回调，需要一个实现了org.apache.kafka.clients.producer.Callback接口的类，这个
+// 类只有一个onCompletion方法
+private class DemoProducerCallback implements Callback {
+  @Override
+  public void onCompletion(RecordMetadata recordMetadata, Exception e) {
+    // 如果Kafka返回一个错误，onCompletion会抛出一个非空异常
+    if (e != null) {
+      e.printStackTrace();
+    }
+  }
+}
+
+ProducerRecord<String, String> record = new ProducerRecord<>("CustomerCountry"
+  , "Biomedical Materials", "USA");
+// 发送消息时传入一个会调对象
+producer.send(record, new DemoProducerCallback());
+```
 
