@@ -154,4 +154,65 @@ request.timeout.ms指定了生产者在发送数据时等待服务器返回响�
 ### receive.buffer.bytes和send.buffer.bytes
 这两个参数分别指定了TCP socket接收和发送数据包的缓冲区大小。如果它们被设为-1 , 就使用操作系统的默认值。如果生产者或消费者与broker处于不同的数据中心，那么可以适当增大这些值，因为跨数据中心的网络一般都有比较高的延迟和比较低的带宽
 
+## 序列化器
+### 自定义序列化器
+如果发送到Kafka的对象不是简单的字符串或整型，那么可以使用序列化框架来创建消息记录，如Avro、Thrift或Protobuf，或者使用自定义序列化器。我们强烈建议使用通用的序列化框架。在此之前我们先通过一个自定义序列化器来了解其工作原理
+
+&emsp;  
+假如创建了一个简单的类来表示一个客户：
+```java
+public class Customer {
+  private int customerID;
+  private String customerName;
+
+  // 省略getter、setter和构造方法
+}
+```
+现在我们要为这个类创建一个序列化器，它看起来可能是这样的：
+```java
+public class CustomerSerializer implements Serializer<Customer> {
+  @Override
+  public void configure(Map configs, boolean isKey) {
+    // 不做任何配置
+  }
+
+  @Override
+  /**
+  Customer对象被序列化成：
+  表示CustomerID的4字节整数
+  表示CustomerName长度的4字节整数（如果CustomerName为空，则长度为0）
+  表示CustomerName的N个字节
+  */
+  public byte[] serialize(String topic, Customer data) {
+    try {
+      byte[] serializedName;
+      int stringSize;
+      if (data == null) {
+        return null;
+      } else {
+        if (data.getName() != null) {
+          serializedName = data.getName().getBytes("UTF-8");
+          stringSize = serializedName.length;
+        } else {
+          serializedName = new byte[0];
+          stringSize = 0;
+        }
+      }
+      ByteBuffer buffer = ByteBuffer.allocate(4 + 4 + stringSize);
+      buffer.putInt(data.getID());
+      buffer.putInt(stringSize);
+      buffer.put(serializedName);
+      return buffer.array();
+    } catch (Exception e) {
+      throw new SerializationException("Serializing Error" + e);
+    }
+
+    @Override
+    public void close() {
+      // 不需要关闭任何东西
+    }
+  }
+}
+```
+这个序列化器太过脆弱，如果Customer字段发生改变，那我序列化和反序列化就可能会出现新旧关系的兼容问题，而且如果序列化器发生改变，那么调用这个序列化器的地方都要更改代码。因此，我们不建议使用自定义序列化器，而是使用已有的序列化器和反序列化器，比如JSON、Avro、Thrift或 Protobuf
 
