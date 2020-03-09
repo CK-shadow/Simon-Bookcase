@@ -214,5 +214,32 @@ public class CustomerSerializer implements Serializer<Customer> {
   }
 }
 ```
-这个序列化器太过脆弱，如果Customer字段发生改变，那我序列化和反序列化就可能会出现新旧关系的兼容问题，而且如果序列化器发生改变，那么调用这个序列化器的地方都要更改代码。因此，我们不建议使用自定义序列化器，而是使用已有的序列化器和反序列化器，比如JSON、Avro、Thrift或 Protobuf
+这个序列化器太过脆弱，如果Customer字段发生改变，那我序列化和反序列化就可能会出现新旧消息的兼容问题，而且如果序列化器发生改变，那么调用这个序列化器的地方都要更改代码。因此，我们不建议使用自定义序列化器，而是使用已有的序列化器和反序列化器，比如JSON、Avro、Thrift或 Protobuf
 
+### 使用Avro序列化
+Apache  Avro （以下简称 Avro）是一种与编程语言无关的序列化格式。 Doug Cutting创建了这个项目，目的是提供一种共享数据文件的方式。 Avro数据通过与语言无关的schema来定义。schema通过 JSON来描述，数据被序列化成二进制文件或JSON文件，不过一般会使用二进制文件。 Avro在读写文件时需要用到schema, schema一般会被内嵌在数据文件里。 Avro有一个很有意思的特性是，当负责写消息的应用程序使用了新的schema，负责读消息的应用程序可以继续处理消息而无需做任何改动，这个特性使得它特别适合用在像Kafka这样的消息系统上
+
+&emsp;  
+假设最初的schema是这样的：
+```json
+{
+  "namespace": "customerManagement.avro",
+  "type": "record",
+  "name": "Customer",
+  "fields": [
+    {"name": "id", "type":"int"},
+    {"name": "name", "type": "string"},
+    {"name": "faxNumber", "type": ["null", "string"], "default": "null"}
+  ]
+}
+```
+之后我们将faxNumber变成了email字段：
+```json
+{"name": "email", "type": ["null", "string"], "default": "null"}
+```
+在应用程序升级之后，getEmail()方法取代了getFaxNumber()方法。如果碰到一个使用旧schema构建的消息，那么getEmail()方法会返回 null，因为旧消息不包含邮件地址。现在可以看出使用Avro的好处了：我们修改了消息的schema，但并没有更新所有负责读取数据的应用程序，而这样仍然不会出现异常或阻断性错误，也不需要对现有数据进行大幅更新
+
+&emsp;  
+不过这里有以下两个需要注意的地方：
+* 用于写入数据和读取数据的schema必须是相互兼容的。Avro文档提到了一些兼容性原则
+* 反序列化器需要用到用于写入数据的schema，即使它可能与用于读取数据的schema不一样。Avro数据文件里就包含了用于写入数据的schema，不过在Kafka里有一种更好的处理方式
