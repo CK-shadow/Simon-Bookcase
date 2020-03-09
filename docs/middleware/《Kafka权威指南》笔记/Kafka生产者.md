@@ -276,3 +276,37 @@ while (true) {
   producer.send(record);
 }
 ```
+
+## 分区
+在之前的例子里，ProducerRecord对象包含了目标主题、键和值。 Kafka的消息是一个个键值对，ProducerRecord对象可以只包含目标主题和值，键可以设置为默认的null，不过大多数应用程序会用到键。键有两个用途：可以作为消息的附加信息，也可以用来决定消息该被写到主题的哪个分区。拥有相同键的消息将被写到同一个分区。 也就是说，如果一个进程只从一个主题的分区读取数据，那么具有相 同键的所有记录都会被该进程读取
+
+&emsp;  
+如果键值为null，并且使用了默认的分区器，那么记录将被随机地发送到主题内各个可用的分区上。分区器使用轮询（Round Robin）算法将消息均衡地分布到各个分区上。 如果键不为空，并且使用了默认的分区器，那么Kafka会对键进行散列（使用Kafka自己的散列算棒，即使升级Java版本，散列值也不会发生变化），然后根据散列值把消息映射到特定的分区上。这里的关键之处在于，同一个键总是被映射到同一个分区上，所以在进行映射时，我们会使用主题所有的分区，而不仅仅是可用的分区。这也意味着，如果写入数据的分区是不可用的，那么就会发生错误。但这种情况很少发生。只有在不改变主题分区数量的情况下，键与分区之间的映射才能保持不变。在从分区读取数据肘，可以进行各种优化。不过，一旦主题增加了新的分区，这些就无陆保证了，旧数据仍然留在之前的分区，但新的记录可能被写到其他分区上。 如果要使用键来映射分区，那么最好在创建主题的时候就把分区规划好，而且永远不要增加新分区
+
+&emsp;  
+**实现自定义分区策略**  
+```java
+public class bananaPartitioner implements Partitioner {
+  public void configure(Map<String, ?> configs){}
+
+  public int partition(String topic, Object key, byte[] keyBytes, Object value
+              , byte[] valueBytes, Cluster cluster) {
+    List<PartitionInfo> partitions = cluster.partitionsForTopic(topic);
+    int numPartitions = partitions.size();
+
+    if ((keyBytes == null) || (!(key instanceOf String))) {
+      throws new 
+        InvaliRecordException("we expect all messages to have customer name as key");
+    }
+
+    if ((String)key.equals("Banana")) {
+      return numPartitions;
+    }
+
+    // 其它记录散列到其它分区
+    return (Math.abs(Utils.murmur2(keyBytes)) % (numPartitions - 1));
+  }
+
+  public void close() {}
+}
+```
