@@ -243,3 +243,36 @@ Apache  Avro （以下简称 Avro）是一种与编程语言无关的序列化�
 不过这里有以下两个需要注意的地方：
 * 用于写入数据和读取数据的schema必须是相互兼容的。Avro文档提到了一些兼容性原则
 * 反序列化器需要用到用于写入数据的schema，即使它可能与用于读取数据的schema不一样。Avro数据文件里就包含了用于写入数据的schema，不过在Kafka里有一种更好的处理方式
+
+### 在Kafka里使用Avro
+Avro的数据文件里包含了整个schema，不过这样的开销是可接受的。但是如果在每条Kafka记录里都嵌入schema，会让记录的大小成倍地增加。不过不管怎样，在读取记录时仍然需要用到整个schema，所以要先找到schema。我们遵循通用的结构模式并使用 “schema 注册表”来达到目的。 schema注册表并不属于Kafka，现在已经有一些开源的schema注册表实现。在这个例子里，我们使用的是Confluent Schema Registry。该注册表 的代码可以在GitHub上找到，你也可以把它作为Confluent平台的一部分进行安装。如果你决定使用这个注册表，可以参考它的文档
+
+&emsp;  
+我们把所有写入数据需要用到的schema保存在注册表里，然后在记录里引用schema的标识符。负责读取数据的应用程序使用标识符从注册表里拉取 schema来反序列化记录。序列化器和反序列化器分别负责处理schema的注册和拉取。Avro序列化器的使用方怯与其他序列化器是一样的  
+![](../../.vuepress/public/img/202003091301.png)   
+下面的例子展示了如何把生成的Avro对象发送到Kafka（关于如何使用Avro生成代码请参考Avro文档）：
+```java
+Properties prosps = new Properties();
+
+props.put("bootstrap.servers", "localhost:9092");
+// 使用Avro的KafkaAvroSerilizer来序列化对象。
+props.put("key.serializer", "io.confluent.kafka.serializers.KafkaAvroSerializer");
+props.put("value.serializer", "io.confluent.kafka.serializers.KafkaAvroSerializer");
+//  schema.registry.url是一个新的参数，指向schema的存储位置
+props.put("schema.registry.url", schemaUrl);
+
+String topic = "customerContacts";
+// Customer是生成的对象。我们会告诉生产者Customer对象就是记录的值
+Prodicer<String, Customer> producer = new KafkaProducer<String, Customer>(props);
+
+// 不断生成事件，直到按下Ctrl+C
+while (true) {
+  Customer customer = CustomerGenerator.getNext();
+  System.out.println(customer.toString());
+  // 实例化一个ProducerRecord对象，并指定Customer为值的类型，然后再传给它一个Customer对象
+  ProducerRecord<String, Customer> record = new ProducerRecord<>(topic, customer.getId()
+    , customer);
+  // 把Customer对象作为记录发送出去，KafkaAvroSerializer会处理剩下的事情
+  producer.send(record);
+}
+```
