@@ -25,3 +25,17 @@ Kafka消费者从属于消费者群组。一个群组里的消费者订阅的是
 
 &emsp;  
 如果一个消费者发生崩溃，并停止读取消息，群组协调器会等待几秒钟，确认它死亡了才会触发再均衡。在这几秒钟时间里，死掉的消费者不会读取分区里的消息。在清理消费者时，消费者会通知协调器它将要离开群组，协调器会立即触发一次再均衡，尽量降低处理停顿
+
+## 创建Kafka消费者
+```java
+Properties props = new Properties();
+// 指定kafka集群的连接字符串
+props.put("bootstrap.servers", "broker1:9092, broker2:9092");
+// 指定消费者属于哪个集群，非必需，但是基本上都会指定
+props.put("group.id", "CountryCounter");
+// 指定反序列化器
+props.put("key.serializer", "org.apache.kafka.common.serialization.StringDeserializer");
+props.put("value.serializer", "org.apache.kafka.common.serialization.StringDeserializer");
+
+KafkaConsumer<String, String> consumer = new KafkaConsumer<String, String>(props);
+```
