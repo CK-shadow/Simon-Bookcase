@@ -39,3 +39,16 @@ props.put("value.serializer", "org.apache.kafka.common.serialization.StringDeser
 
 KafkaConsumer<String, String> consumer = new KafkaConsumer<String, String>(props);
 ```
+
+## 订阅主题
+创建好消费者之后，下一步可以开始订阅主题了。 subscribe()方法接受一个主题列表作为参数:
+```java
+consumer.subscribe(Collections.singletonList("consumerCountries"));
+```
+我们也可以在调用subscribe()方法时传入一个正则表达式。正则表达式可以匹配多个主题， 如果有人创建了新的主题，并且主题的名字与正则表达式匹配，那么会立即触发一次再均衡，消费者就可以读取新添加的主题。如果应用程序需要读取多个主题，并且可以处理不同类型的数据，那么这种订阅方式就很管用。在Kafka和其他系统之间复制数据时 使用正则表达式的方式订阅多个主题是很常见的做法
+
+&emsp;  
+要订阅所有与test相关的主题，可以这样做：
+```java
+consumer.subscribe("test.*");
+```
