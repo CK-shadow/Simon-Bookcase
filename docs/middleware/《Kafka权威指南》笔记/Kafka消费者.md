@@ -52,3 +52,32 @@ consumer.subscribe(Collections.singletonList("consumerCountries"));
 ```java
 consumer.subscribe("test.*");
 ```
+
+## 轮询
+消息轮询是消费者API的核心，通过一个简单的轮询向服务器请求数据。一旦消费者订阅了主题，轮询就会处理所有的细节，包括群组协调、分区再均衡、发送心跳和获取数据，开发者只需要使用一组简单的API来处理从分区返回的数据。消费者代码的主要部分如下所示：
+```java
+try {
+    // 消费者实际上是一个长期运行的应用程序,它通过持续轮询向Kafka请求数据
+    while (true) {
+        // 消费者必须持续对Kafka进行轮询，否则会被认为己经死亡，它的分区会被移交给群组里的
+        // 其他消费者
+        // 传给poll()方法的参数是一个超时时间，用于控制 poll()方法的阻塞时间
+        ConsumerRecords<String, String> records = consumer.poll(100);
+        //  poll()方法返回一个记录列表。每条记录都包含了记录所属主题的信息、记录所在分区的
+        // 信息、记录在分区里的偏移量，以及记录的键值对
+        for (ConsumerRecord<String, String> record : records) {
+            int updateCount = 1;
+            if (custCountryMap.countainsValue(record.value())) {
+                updateCount = custCountryMap.get(record.value()) + 1;
+            }
+            custCountryMap.put(record.value(), updatedCount);
+
+            JSONObject json = new JSONObject(custCountryMap);
+            System.out.println(json.toString(4));
+        }
+    }
+} finally {
+    consumer.close();
+}
+```
+轮询不只是获取数据那么简单。在第一次调用新消费者的poll()方法时，它会负责查找GroupCoordinator，然后加入群组，接受分配的分区。 如果发生了再均衡，整个过程也是在轮询期间进行的。当然，心跳也是从轮询里发迭出去的。所以，我们要确保在轮询期间所做的任何处理工作都应该尽快完成
