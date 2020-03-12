@@ -109,3 +109,82 @@ fetch.max.wait.ms则用于指定broker的等待时间，默认是500ms。如果�
 
 9. receive.buffer.bytes和send.buffer.bytes  
 socket在读写数据时用到的TCP缓冲区也可以设置大小。如果它们被设为－1，就使用操作系统的默认值。如果生产者或消费者与broker处于不同的数据中心内，可以适当增大这些值，因为跨数据中心的网络一般都有比较高的延迟和比较低的带宽
+
+## 提交和偏移量
+每次调用poll()方法，它总是返回由生产者写入Kafka但还没有被消费者读取过的记录。Kafka不会像其他JMS队列那样需要得到消费者的确认，这是Kafka的一个独特之处。相反，消费者可以使用Kafka来追踪消息在分区里的位置（偏移量）。我们把更新分区当前位置的操作叫作提交
+
+&emsp;  
+消费者往一个叫作_consumer_offset的特殊主题发送消息，消息里包含每个分区的偏移量。如果消费者一直处于运行状态，那么偏移量就没有什么用处。不过，如果消费者发生崩溃或者有新的消费者加入群组，就会触发再均衡，完成再均衡之后，每个消费者可能分配到新的分区，而不是之前处理的那个。为了能够继续之前的工作，消费者需要读取每个分区最后一次提交的偏移量，然后从偏移量指定的地方继续处理。 如果提交的偏移量小于客户端处理的最后一个消息的偏移量，那么处于两个偏移量之间的 消息就会被重复处理。如果提交的偏移量大于客户端处理的最后一个消息的偏移量，那么处于两个偏移量之间的消息将会丢失
+
+### 自动提交
+最简单的提交方式是让消费者自动提交偏移量。如果enable.auto.commit被设为true，那么每过5s，消费者会自动把从poll()方法接收到的最大偏移量提交上去。提交时间间 由auto.commit.interval.ms控制，默认值是5s。与消费者里的其他东西一样，自动提交也是在轮询里进行的。消费者每次在进行轮询时会检查是否该提交偏移量了，如果是，那么就会提交从上一次轮询返回的偏移量
+
+### 提交当前偏移量
+开发者可以在必要的时候提交当前偏移量，而不是基于时间间隔。 把auto.commit.offset设为false，让应用程序决定何时提交偏移量。使用commitSync()交偏移量最简单也最可靠。这个API会提交由poll()方法返回的最新偏移量，提交成功后马上返回，如果提交失败就抛出异常
+```java
+while (true) {
+    ConsumerRecords<String, String> records = consumer.poll(100);
+    for (Consumer<String, String> record : records) {
+        System.out.println(record);
+    }
+    try {
+        consumer.commitSync();
+    } catch (CommitFailedException e) {
+        log.error("Error Happend");
+    }
+}
+```
+
+### 异步提交
+手动提交有一个不足之处，在broker对提交请求作出回应之前，应用程序会一直阻塞，这样会限制应用程序的吞吐量。我们可以通过降低提交频率来提升吞吐量，但如果发生了再均衡，会增加重复消息的数量。这个时候可以使用异步提交API。我们只管发送提交请求，无需等待broker的响应
+```java
+Consumer.commitAsync();
+```
+在成功提交或碰到无怯恢复的错误之前，Consumer.commitSync()会一直重试，但是Consumer.commitAsync()不会，这也是Consumer.commitAsync()不好的一个地方。它之所以不进行重试，是因为在它收到服务器响应的时候，可能有一个更大的偏移量已经提交成功
+
+### 同步和异步组合提交
+一般情况下，针对偶尔出现的提交失败，不进行重试不会有太大问题，因为如果提交失败是因为临时问题导致的，那么后续的提交总会有成功的。但如果这是发生在关闭消费者或再均衡前的最后一次提交，就要确保能够提交成功。 因此，在消费者关闭前一般会组合使用Consumer.commitAsync()和Consumer.commitSync()。它们的工作原理如下：
+```java
+try {
+    while (true) {
+        ConsumerRecords<String, String> records = consumer.poll(100);
+        for (Consumer<String, String> record : records) {
+            System.out.println(record);
+        }
+        // 如果一切正常，使用异步提交，这样就算这次失败了，下次提交也会成功
+        consumer.commitAsync();
+    }
+} catch (Exception e) {
+    log.error("Error Happend");
+} finally {
+    try {
+        // 如果要关闭消费者，那就没有下一次了，这时就使用同步提交
+        consumer.commitSync();
+    } finally {
+        consumer.close();
+    }
+}
+```
+
+### 提交特定的偏移量
+如果poll()方法返回一大批数据，为了避免因再均衡引起的重复处理整批消息，想要在批 次中间提交偏移量，这时无法通过调用consumer.commitAsync()或consumer.commitSync()来实现，因为它们只会提交最后一个偏移量，而此时该批次里的消息还没有处理完。幸运的是，消费者 API允许在调用consumer.commitSync()和consumer.commitAsync()方法时传进去希望提交的分区和偏移量的map
+```java
+// 用于跟踪偏移量的map
+private Map<TopicPartition, OffsetAndMetadata> currentOffsets = new HashMap<>();
+int count = 0;
+...
+while (true) {
+    ConsumerRecords<String, String> records = consumer.poll(100);
+    for (Consumer<String, String> record : records) {
+        System.out.println(record);
+        // 在读取每条记录之后，使用期望处理的下一个消息的偏移量更新map里的偏移量
+        currentOffsets.put(new TopicPartition(record.topic(), record.partition()
+            , new OffsetAndMetadata(record.offset()+1, "no metadata"));
+        // 没处理1000条消息就提交一次
+        if (count % 1000 = 0) {
+            consumer.commitAsync(currentOffsets, null);
+        }
+        count++;
+    }
+}
+```
