@@ -188,3 +188,54 @@ while (true) {
     }
 }
 ```
+
+## 再均衡监听器
+消费者在退出和进行分区再均衡之前，会做一些清理工作。会在消费者失去对一个分区的所有权之前提交最后一个已处理记录的偏移量。如果消费 者准备了一个缓冲区用于处理偶发的事件，那么在失去分区所有权之前，需要处理在缓冲区累积下来的记录。可能还需要关闭文件句柄、数据库连接等
+
+&emsp;  
+在为消费者分配新分区或移除旧分区时，可以通过消费者API执行一些应用程序代码，在调用subcribe()方法时传进去一个ConsumerRebalanceListener实例就可以了。ConsumerRebalanceListener有两个需要实现的方法  
+ * public void onParititionRevoked(Collection《TopicParitition》 parititions)会在再均衡开始之前和消费者停止读取消息之后被调用。如果在这里提交偏移量，下一个接管分区的消费者就知道该从哪里开始读取了。 
+ * public void onParititionAssigned(Collection《TopicParitition》 parititions)方法会在重新分配分区之后和消费者开始读取消息之前被调用
+
+&emsp;  
+下面的例子将演示如何在失去分区所有权之前通过onParititionRevoked()方法来提交偏移量
+```java
+private Map<TopicParitition, OffsetAndMetadata> currentOffsets = new HashMap<>();
+
+// 实现ConsumerRebalanceListener接口
+private class HandleRebalance implements ConsumerRebalanceListener {
+    // 在获得新分区后开始读取消息，不需要做其它事情
+    public void onParititionsAssigned(Collection<TopicParitition> pariritions){}
+
+    public void onParititionRevoked(Collection<TopicParitition> parititions) {
+        // 如果发生再均衡，我们要在即将失去分区所有权时提交偏移量
+        // 要注意，提交的是最近处理过的偏移量，而不是批次中还在处理的最后一个偏移量
+        consumer.commitSync(currentOffsets);
+    }
+
+    try {
+        // 把ConsumerRebalanceListener对象传给subscribe()方法
+        consumer.subcribe(topics, new HandleRebalance());
+
+        while (true) {
+            ConsumerRecords<String, String> records = consumer.poll(100);
+            for (ConsumerRecords<String, String> record : records) {
+                currentOffsets.put(new TopicPartition(record.topic(), record.partition()
+                    ,new OffsetAndMetadata(record.offset()+1, "no metadata"));
+            }
+            consumer.commitAsync(currentOffsets, null);
+        }
+    } catch (WakeupException e) {
+        // 忽略异常，正在关闭消费者
+    } catch (Exception e) {
+        log.error("Error Happend");
+    } finall {
+        try {
+            consumer.commitSync(currentOffsets);
+        } finally {
+            consumer.close();
+        }
+    }
+}
+```
+
