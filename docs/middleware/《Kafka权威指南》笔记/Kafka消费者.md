@@ -194,20 +194,20 @@ while (true) {
 
 &emsp;  
 在为消费者分配新分区或移除旧分区时，可以通过消费者API执行一些应用程序代码，在调用subcribe()方法时传进去一个ConsumerRebalanceListener实例就可以了。ConsumerRebalanceListener有两个需要实现的方法  
- * public void onParititionRevoked(Collection《TopicParitition》 parititions)会在再均衡开始之前和消费者停止读取消息之后被调用。如果在这里提交偏移量，下一个接管分区的消费者就知道该从哪里开始读取了。 
- * public void onParititionAssigned(Collection《TopicParitition》 parititions)方法会在重新分配分区之后和消费者开始读取消息之前被调用
+ * public void onPartitionRevoked(Collection《TopicPartition》 partitions)会在再均衡开始之前和消费者停止读取消息之后被调用。如果在这里提交偏移量，下一个接管分区的消费者就知道该从哪里开始读取了。 
+ * public void onPartitionAssigned(Collection《TopicPartition》 partitions)方法会在重新分配分区之后和消费者开始读取消息之前被调用
 
 &emsp;  
-下面的例子将演示如何在失去分区所有权之前通过onParititionRevoked()方法来提交偏移量
+下面的例子将演示如何在失去分区所有权之前通过onPartitionRevoked()方法来提交偏移量
 ```java
-private Map<TopicParitition, OffsetAndMetadata> currentOffsets = new HashMap<>();
+private Map<TopicPartition, OffsetAndMetadata> currentOffsets = new HashMap<>();
 
 // 实现ConsumerRebalanceListener接口
 private class HandleRebalance implements ConsumerRebalanceListener {
     // 在获得新分区后开始读取消息，不需要做其它事情
-    public void onParititionsAssigned(Collection<TopicParitition> pariritions){}
+    public void onPartitionsAssigned(Collection<TopicPartition> Parritions){}
 
-    public void onParititionRevoked(Collection<TopicParitition> parititions) {
+    public void onPartitionRevoked(Collection<TopicPartition> Partitions) {
         // 如果发生再均衡，我们要在即将失去分区所有权时提交偏移量
         // 要注意，提交的是最近处理过的偏移量，而不是批次中还在处理的最后一个偏移量
         consumer.commitSync(currentOffsets);
@@ -240,21 +240,21 @@ private class HandleRebalance implements ConsumerRebalanceListener {
 ```
 
 ## 从特定偏移量处开始处理记录
-如果你想从分区的起始位置开始读取消息，或者直接跳到分区的末尾开始读取消息，可以使用seekToBeginning(Collection《TopicParirition》 tp)和seekToEnd(Collection《TopicParirition》 tp） 这两个方方法。不过，Kafka也为我们提供了用于查找特定偏移量的API。它有很多用途，比如向后回退几个消息或者向前跳过几个消息
+如果你想从分区的起始位置开始读取消息，或者直接跳到分区的末尾开始读取消息，可以使用seekToBeginning(Collection《TopicParrition》 tp)和seekToEnd(Collection《TopicParrition》 tp） 这两个方方法。不过，Kafka也为我们提供了用于查找特定偏移量的API。它有很多用途，比如向后回退几个消息或者向前跳过几个消息
 
 &emsp;  
 如果希望保存记录和偏移量可以在一个原子操作里完成。记录和偏移量要么都被成功提交，要么都不提交。如果记录是保存在数据库里而偏移量是提交到Kafka上，那么就无法实现原子操作。我们可以将偏移量和记录都保存在数据库里，然后使用seek()方法读取偏移量
 ```java
 public class SaveOffsetOnRebalance implements ConsumerRebalanceListener {
-    public void onParititionsRevoked(Collection<TopicParitition> parititions) {
+    public void onPartitionsRevoked(Collection<TopicPartition> Partitions) {
         // 处理完记录之后，使用事务将记录和偏移量插入数据库
         commitDBTransaction();
     }
 
-    public void onParititionsAssigned(Collection<TopicParitition> parititions) {
-        for (TopicParitition paritition : parititions) {
+    public void onPartitionsAssigned(Collection<TopicPartition> Partitions) {
+        for (TopicPartition Partition : Partitions) {
             // 在分配到新分区的时候，从数据库获取偏移量，使用seek()方法定位
-            consumer.seek(paritition, getOffsetFromDB(paritition));
+            consumer.seek(Partition, getOffsetFromDB(Partition));
         }
     }
 }
@@ -262,9 +262,9 @@ public class SaveOffsetOnRebalance implements ConsumerRebalanceListener {
 consumer.subcribe(topics, new SaveOffsetOnRebalance(consumer));
 consumer.poll(0);
 
-for (TopicParitition paritition : parititions) {
+for (TopicPartition Partition : Partitions) {
     // 新加入消费者，订阅主题后，定位偏移量
-    consumer.seek(paritition, getOffsetFromDB(paritition));
+    consumer.seek(Partition, getOffsetFromDB(Partition));
 }
 
 while (true) {
@@ -272,7 +272,7 @@ while (true) {
     for (ConsumerRecords<String, String> record : records) {
         processRecord(record);
         storeRecordInDB(record);
-        storeOffsetInDB(record.topic(), record.paritition(), record.offset());
+        storeOffsetInDB(record.topic(), record.Partition(), record.offset());
     }
     // 一次性提交多个记录和偏移量
     commitDBTransaction();
@@ -305,7 +305,7 @@ try {
         for (ConsumerRecords<String, String> record : records) {
             System.out.println(record.toString());
         }
-        for (TopicParitition tp : consumer.assignment()) {
+        for (TopicPartition tp : consumer.assignment()) {
             movingAvg.consumer.commitAsync();
         }
     } catch (WakeupException e) {
@@ -315,3 +315,28 @@ try {
     }
 }
 ```
+
+## 独立消费者
+如果只需要一个消费者从一个主题的所有分区或者某个特定的分区读取数据。这个时候就不需要消费者群组和再均衡了，只需要把主题或者分区分配给消费者，然后开始读取消息井提交偏移量。如果是这样的话，就不需要订阅主题，取而代之的是为自己分配分区。一个消费者可以订阅主题（并加入消费者群组），或者为自己分配分区， 但不能同时做这两件事情
+```java
+List<PartitionInfo> PartitionInfos = null;
+// 向集群请求主题可用的分区，如果要读取特定的分区，可忽略这一步
+partitionInfos = consumer.PartiotionsFor("topic");
+
+if (PartitionInfos != null) {
+    for (PartitionInfo partition : partitionInfos) {
+        partitions.add(new TopicPartition(partition.topic(), partition.partition()));
+    }
+    // 确定需要调用的分区之后，调用assign方法
+    consumer.assign(partitions);
+
+    while (true) {
+        ConsumerRecord<String, String> records = consumer.poll(1000);
+        for (ConsumerRecords<String, String> record : records) {
+            System.out.println(record.toString());
+        }
+        consumer.commitSync();
+    }
+}
+```
+除了不会发生再均衡，也不需要手动查找分区，其他的看起来一切正常。不过要记住，如果主题增加了新的分区，消费者并不会收到通知。所以，要么周期性地调用consumer.PartiotionsFor()方法来检查是否有新分区加入，要么在添加新分区后重启应用程序
