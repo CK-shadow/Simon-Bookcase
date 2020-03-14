@@ -239,3 +239,43 @@ private class HandleRebalance implements ConsumerRebalanceListener {
 }
 ```
 
+## 从特定偏移量处开始处理记录
+如果你想从分区的起始位置开始读取消息，或者直接跳到分区的末尾开始读取消息，可以使用seekToBeginning(Collection《TopicParirition》 tp)和seekToEnd(Collection《TopicParirition》 tp） 这两个方方法。不过，Kafka也为我们提供了用于查找特定偏移量的API。它有很多用途，比如向后回退几个消息或者向前跳过几个消息
+
+&emsp;  
+如果希望保存记录和偏移量可以在一个原子操作里完成。记录和偏移量要么都被成功提交，要么都不提交。如果记录是保存在数据库里而偏移量是提交到Kafka上，那么就无法实现原子操作。我们可以将偏移量和记录都保存在数据库里，然后使用seek()方法读取偏移量
+```java
+public class SaveOffsetOnRebalance implements ConsumerRebalanceListener {
+    public void onParititionsRevoked(Collection<TopicParitition> parititions) {
+        // 处理完记录之后，使用事务将记录和偏移量插入数据库
+        commitDBTransaction();
+    }
+
+    public void onParititionsAssigned(Collection<TopicParitition> parititions) {
+        for (TopicParitition paritition : parititions) {
+            // 在分配到新分区的时候，从数据库获取偏移量，使用seek()方法定位
+            consumer.seek(paritition, getOffsetFromDB(paritition));
+        }
+    }
+}
+
+consumer.subcribe(topics, new SaveOffsetOnRebalance(consumer));
+consumer.poll(0);
+
+for (TopicParitition paritition : parititions) {
+    // 新加入消费者，订阅主题后，定位偏移量
+    consumer.seek(paritition, getOffsetFromDB(paritition));
+}
+
+while (true) {
+    ConsumerRecords<String, String> records = consumer.poll(100);
+    for (ConsumerRecords<String, String> record : records) {
+        processRecord(record);
+        storeRecordInDB(record);
+        storeOffsetInDB(record.topic(), record.paritition(), record.offset());
+    }
+    // 一次性提交多个记录和偏移量
+    commitDBTransaction();
+}
+```
+通过把偏移量和记录保存到同一个外部系统来实现单次语义可以有很多种方式，不过它们都需要结合使用ConsumerRebalanceListener和seek()方法来确保能够及时保存偏移量，并保证消费者总是能够从正确的位置开始读取消息
