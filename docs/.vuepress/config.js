@@ -80,6 +80,7 @@ module.exports = {
                     ['/middleware/《Kafka权威指南》笔记/安装Kafka','安装Kafka'],
                     ['/middleware/《Kafka权威指南》笔记/Kafka生产者','Kafka生产者'],
                     ['/middleware/《Kafka权威指南》笔记/Kafka消费者','Kafka消费者'],
+                    ['/middleware/《Kafka权威指南》笔记/深入Kafka','深入Kafka'],
                 ]
             },
             {title: 'Nginx教程',children: [['/middleware/Nginx教程/Nginx简介','Nginx简介'],['/middleware/Nginx教程/Nginx的安装','Nginx的安装'],['/middleware/Nginx教程/Nginx常用命令','Nginx常用命令'],['/middleware/Nginx教程/Nginx配置文件','Nginx配置文件'],['/middleware/Nginx教程/Nginx反向代理配置','Nginx反向代理配置'],['/middleware/Nginx教程/Nginx负载均衡配置','Nginx负载均衡配置'],['/middleware/Nginx教程/Nginx动静分离配置','Nginx动静分离配置'],['/middleware/Nginx教程/Nginx高可用配置','Nginx高可用配置'],['/middleware/Nginx教程/Nginx原理','Nginx原理'],]},
