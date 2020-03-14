@@ -279,3 +279,39 @@ while (true) {
 }
 ```
 通过把偏移量和记录保存到同一个外部系统来实现单次语义可以有很多种方式，不过它们都需要结合使用ConsumerRebalanceListener和seek()方法来确保能够及时保存偏移量，并保证消费者总是能够从正确的位置开始读取消息
+
+## 如何退出
+如果确定要退出循环，需要通过另一个线程调用consumer.wakeup()方法。如果循环运行在主线程里，可以在ShutdownHook里调用该方法。要记住，consumer.wakeup()是消费者唯一一个可以从其他线程里安全调用的方法。调用consumer.wakeup()可以退出poll() , 并抛出consumer.WakeupException异常，或者如果调用consumer.wakeup()时线程没有等待轮询，那么异常将在下一轮调用poll()时抛出。我们不需要处理 WakeupException，因为它只是用于跳出循环的一种方式。不过，在退出线程之前调用consumer.close()是很有必要的，它会提交任何还没有提交的东西，并向群组协调器发送消息，告知自己要离开群组，接下来就会触发再均衡，而不需要等待会话超时
+```java
+Runtime.getRuntime().addShutdownHook(new Thread {
+    public void run() {
+        System.out.println("Starting Exiting");
+        // 退出循环最安全的方法只能是wakeup方法
+        consumer.wakeup();
+        try {
+            mainThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+});
+
+...
+
+try {
+    // 循环，直到按下Ctrl+C，关闭的钩子会在退出时进行清理
+    while (true) {
+        ConsumerRecords<String, String> records = consumer.poll(1000);
+        for (ConsumerRecords<String, String> record : records) {
+            System.out.println(record.toString());
+        }
+        for (TopicParitition tp : consumer.assignment()) {
+            movingAvg.consumer.commitAsync();
+        }
+    } catch (WakeupException e) {
+        // 在另一个线程里调用wakeup方法，因此poll时会抛出异常
+    } finally {
+        consumer.close();
+    }
+}
+```
