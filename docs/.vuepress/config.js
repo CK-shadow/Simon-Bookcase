@@ -42,8 +42,15 @@ module.exports = {
                 {title: 'Linux基础',children: [['/computer/Linux基础/指令与选项','指令与选项'],['/computer/Linux基础/基础指令','基础指令'],['/computer/Linux基础/进阶指令','进阶指令'],['/computer/Linux基础/高级指令','高级指令']]},
                 {title: 'HTTP简介',children: [['/computer/HTTP简介/Web访问中的角色与协议','Web访问中的角色与协议'],['/computer/HTTP简介/HTTP协议','HTTP协议'],['/computer/HTTP简介/HTTP版本','HTTP版本'],['/computer/HTTP简介/HTTP协议组成','HTTP协议组成'],['/computer/HTTP简介/状态码','状态码'],['/computer/HTTP简介/GET与POST请求','GET与POST请求'],]},
                 {title: '图解TCPIP--阅读笔记',children: [['/computer/《图解TCPIP》笔记/网络基础知识','网络基础知识'],['/computer/《图解TCPIP》笔记/TCPIP基础知识','TCPIP基础知识'],['/computer/《图解TCPIP》笔记/数据链路','数据链路'],['/computer/《图解TCPIP》笔记/IP协议','IP协议'],['/computer/《图解TCPIP》笔记/IP协议相关技术','IP协议相关技术'],['/computer/《图解TCPIP》笔记/TCP和UDP','TCP和UDP'],['/computer/《图解TCPIP》笔记/路由协议','路由协议'],['/computer/《图解TCPIP》笔记/应用协议','应用协议'],['/computer/《图解TCPIP》笔记/网络安全','网络安全'],]},
-                {title: '图解HTTP--阅读笔记',children: [['/computer/《图解HTTP》笔记/了解Web及网络基础','了解Web及网络基础'],['/computer/《图解HTTP》笔记/简单的HTTP协议','简单的HTTP协议'],['/computer/《图解HTTP》笔记/HTTP报文内的HTTP信息','HTTP报文内的HTTP信息'],['/computer/《图解HTTP》笔记/返回结果的HTTP状态码','返回结果的HTTP状态码'],['/computer/《图解HTTP》笔记/与HTTP协作的Web服务器','与HTTP协作的Web服务器'],['/computer/《图解HTTP》笔记/HTTP首部','HTTP首部'],['/computer/《图解HTTP》笔记/确保Web安全的HTTPS协议','确保Web安全的HTTPS协议'],['/computer/《图解HTTP》笔记/确保访问用户身份的认证','确保访问用户身份的认证'],['/computer/《图解HTTP》笔记/基于HTTP的功能追加协议','基于HTTP的功能追加协议'],['/computer/《图解HTTP》笔记/Web攻击技术','Web攻击技术'],]}
-           ],
+                {title: '图解HTTP--阅读笔记',children: [['/computer/《图解HTTP》笔记/了解Web及网络基础','了解Web及网络基础'],['/computer/《图解HTTP》笔记/简单的HTTP协议','简单的HTTP协议'],['/computer/《图解HTTP》笔记/HTTP报文内的HTTP信息','HTTP报文内的HTTP信息'],['/computer/《图解HTTP》笔记/返回结果的HTTP状态码','返回结果的HTTP状态码'],['/computer/《图解HTTP》笔记/与HTTP协作的Web服务器','与HTTP协作的Web服务器'],['/computer/《图解HTTP》笔记/HTTP首部','HTTP首部'],['/computer/《图解HTTP》笔记/确保Web安全的HTTPS协议','确保Web安全的HTTPS协议'],['/computer/《图解HTTP》笔记/确保访问用户身份的认证','确保访问用户身份的认证'],['/computer/《图解HTTP》笔记/基于HTTP的功能追加协议','基于HTTP的功能追加协议'],['/computer/《图解HTTP》笔记/Web攻击技术','Web攻击技术'],]},
+                {
+                    title: '设计模式',
+                    children: 
+                        [
+                        ['/computer/设计模式/设计模式简介','设计模式简介'],
+                        ]
+                },
+            ],
            '/java/': [
             ['/java/首页','首页'],
             {
@@ -73,18 +80,7 @@ module.exports = {
             ],
            '/middleware/':[
             ['/middleware/首页', '首页'],
-            {
-                title: '《Kafka权威指南》--笔记',
-                children: [
-                    ['/middleware/《Kafka权威指南》笔记/初识Kafka','初识Kafka'],
-                    ['/middleware/《Kafka权威指南》笔记/安装Kafka','安装Kafka'],
-                    ['/middleware/《Kafka权威指南》笔记/Kafka生产者','Kafka生产者'],
-                    ['/middleware/《Kafka权威指南》笔记/Kafka消费者','Kafka消费者'],
-                    ['/middleware/《Kafka权威指南》笔记/深入Kafka','深入Kafka'],
-                    ['/middleware/《Kafka权威指南》笔记/可靠的数据传递','可靠的数据传递'],
-                    ['/middleware/《Kafka权威指南》笔记/构建数据管道','构建数据管道'],
-                ]
-            },
+            {title: '《Kafka权威指南》--笔记',children: [['/middleware/《Kafka权威指南》笔记/初识Kafka','初识Kafka'],['/middleware/《Kafka权威指南》笔记/安装Kafka','安装Kafka'],['/middleware/《Kafka权威指南》笔记/Kafka生产者','Kafka生产者'],['/middleware/《Kafka权威指南》笔记/Kafka消费者','Kafka消费者'],['/middleware/《Kafka权威指南》笔记/深入Kafka','深入Kafka'],['/middleware/《Kafka权威指南》笔记/可靠的数据传递','可靠的数据传递'],['/middleware/《Kafka权威指南》笔记/构建数据管道','构建数据管道'],]},
             {title: 'Nginx教程',children: [['/middleware/Nginx教程/Nginx简介','Nginx简介'],['/middleware/Nginx教程/Nginx的安装','Nginx的安装'],['/middleware/Nginx教程/Nginx常用命令','Nginx常用命令'],['/middleware/Nginx教程/Nginx配置文件','Nginx配置文件'],['/middleware/Nginx教程/Nginx反向代理配置','Nginx反向代理配置'],['/middleware/Nginx教程/Nginx负载均衡配置','Nginx负载均衡配置'],['/middleware/Nginx教程/Nginx动静分离配置','Nginx动静分离配置'],['/middleware/Nginx教程/Nginx高可用配置','Nginx高可用配置'],['/middleware/Nginx教程/Nginx原理','Nginx原理'],]},
             {title: 'RabbitMQ教程',children: [['/middleware/RabbitMQ教程/RabbitMQ简介','RabbitMQ简介'],['/middleware/RabbitMQ教程/安装RabbitMQ','安装RabbitMQ'],['/middleware/RabbitMQ教程/五种队列之简单队列','五种模型之简单队列'],['/middleware/RabbitMQ教程/五种队列之Work模式','五种模型之Work模式'],['/middleware/RabbitMQ教程/五种队列之Fanout','五种模型之订阅模型'],['/middleware/RabbitMQ教程/五种队列之Direct','五种模型之路由模型'],['/middleware/RabbitMQ教程/五种队列之Topic','五种模型之主题模型'],['/middleware/RabbitMQ教程/Spring整合RabbitMQ','Spring整合RabbitMQ'],['/middleware/RabbitMQ教程/SpringBoot整合RabbitMQ','SpringBoot整合RabbitMQ'],]},
         ],
