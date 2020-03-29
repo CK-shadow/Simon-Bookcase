@@ -48,6 +48,7 @@ module.exports = {
                     children: 
                         [
                         ['/computer/设计模式/设计模式简介','设计模式简介'],
+                        ['/computer/设计模式/策略模式','策略模式'],
                         ]
                 },
             ],
